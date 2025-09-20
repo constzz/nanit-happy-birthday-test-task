@@ -17,6 +17,7 @@ struct ChildInfoView: View {
     @State private var showBirthdayScreen: Bool = false
     @State private var showImagePicker: Bool = false
     @State private var canShowBirthdayScreen: Bool = false
+    @StateObject private var attachmentsPicker = AttachmentsPickerPresenter()
     
     @State private var cancellables: Set<AnyCancellable> = []
     
@@ -37,6 +38,7 @@ struct ChildInfoView: View {
                 TextField(NSLocalizedString("Enter name", comment: "Name input placeholder"), text: $name)
                     .onChange(of: name) { _, newName in viewModel.setName(newName) }
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .textContentType(.name)
                 
                 Text(NSLocalizedString("Birthday", comment: "Birthday label"))
                     .font(.headline)
@@ -48,8 +50,14 @@ struct ChildInfoView: View {
             }
             
             Button(action: {
-                showImagePicker = true
-                viewModel.setShowImagePicker(true)
+                attachmentsPicker.present(allowedAttachments: [
+                    .library(allowedMediaTypes: [.photo]),
+                    .camera(allowedMediaTypes: [.photo], camera: .rear, allowsEditing: true)
+                ], onPicked: { images in
+                    if let image = images.first {
+                        viewModel.setPicture(image)
+                    }
+                })
             }) {
                 HStack {
                     if let picture = picture {

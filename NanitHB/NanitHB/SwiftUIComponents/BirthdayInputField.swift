@@ -9,9 +9,16 @@ import SwiftUI
 
 struct BirthdayInputField: UIViewRepresentable {
     @Binding var date: Date?
+    var maxDate: Date?
     
+    init(date: Binding<Date?>, maxDate: Date? = nil) {
+        self._date = date
+        self.maxDate = maxDate
+    }
+
     func makeUIView(context: Context) -> BirthdayInputView {
         let view = BirthdayInputView()
+        view.maxDate = maxDate
         view.onClear = {
             self.date = nil
         }

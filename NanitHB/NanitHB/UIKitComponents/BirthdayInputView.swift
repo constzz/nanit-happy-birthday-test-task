@@ -12,6 +12,10 @@ final class BirthdayInputView: UIView, UITextFieldDelegate {
     private(set) var datePicker = UIDatePicker()
     var onClear: (() -> Void)?
     var onDateChanged: ((Date?) -> Void)?
+    var maxDate: Date? {
+        didSet { datePicker.maximumDate = maxDate }
+    }
+    
     @Published private(set) var date: Date? {
         didSet { onDateChanged?(date) }
     }

@@ -42,7 +42,7 @@ struct ChildInfoView: View {
                 
                 Text(NSLocalizedString("Birthday", comment: "Birthday label"))
                     .font(.headline)
-                BirthdayInputField(date: $birthday)
+                BirthdayInputField(date: $birthday, maxDate: .now)
                     .onChange(of: birthday) { _, newBirthday in
                         viewModel.setBirthday(newBirthday)
                     }

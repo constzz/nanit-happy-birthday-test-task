@@ -1,0 +1,62 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Birthday" : {
+      "comment" : "Birthday label"
+    },
+    "Camera" : {
+      "comment" : "Camera action"
+    },
+    "Cancel" : {
+      "comment" : "Cancel action"
+    },
+    "clear" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear"
+          }
+        }
+      }
+    },
+    "Clear" : {
+      "comment" : "Clear button for date picker"
+    },
+    "Documents" : {
+      "comment" : "Documents action"
+    },
+    "Done" : {
+      "comment" : "Done button for date picker"
+    },
+    "Enter name" : {
+      "comment" : "Name input placeholder"
+    },
+    "Give Access to Camera" : {
+      "comment" : "Camera access action"
+    },
+    "Library" : {
+      "comment" : "Library action"
+    },
+    "Name" : {
+      "comment" : "Name label"
+    },
+    "Nanit" : {
+      "comment" : "App title"
+    },
+    "Pick attachment(-s)" : {
+      "comment" : "Attachments alert title"
+    },
+    "Picture" : {
+      "comment" : "Picture button label"
+    },
+    "Select birthday" : {
+      "comment" : "Birthday input placeholder"
+    },
+    "Show birthday screen" : {
+      "comment" : "Show birthday screen button"
+    }
+  },
+  "version" : "1.0"
+}

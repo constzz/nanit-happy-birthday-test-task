@@ -1,0 +1,44 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Birthday" : {
+
+    },
+    "clear" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear"
+          }
+        }
+      }
+    },
+    "Clear" : {
+      "comment" : "Clear button for date picker"
+    },
+    "Done" : {
+      "comment" : "Done button for date picker"
+    },
+    "Enter name" : {
+
+    },
+    "Name" : {
+
+    },
+    "Nanit" : {
+
+    },
+    "Picture" : {
+
+    },
+    "Select birthday" : {
+      "comment" : "Birthday input placeholder"
+    },
+    "Show birthday screen" : {
+
+    }
+  },
+  "version" : "1.0"
+}

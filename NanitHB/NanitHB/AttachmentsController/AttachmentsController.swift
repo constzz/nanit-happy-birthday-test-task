@@ -36,7 +36,7 @@ final class AttachmentsController: NSObject, UIImagePickerControllerDelegate, PH
     }
     
     func requestAttachment(allowedAttachments: [Attachment], limit: Int) -> AnyPublisher<[FileCached]?, Never> {
-        let actionSheet = UIAlertController(title: NSLocalizedString("Attachments", comment: "Attachments alert title"), message: "", preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: NSLocalizedString("Pick attachment(-s)", comment: "Attachments alert title"), message: "", preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel action"), style: .cancel))
         
         allowedAttachments.forEach { attachment in

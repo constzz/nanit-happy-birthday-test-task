@@ -1,9 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "Attachments" : {
-      "comment" : "Attachments alert title"
-    },
     "Birthday" : {
       "comment" : "Birthday label"
     },
@@ -47,6 +44,9 @@
     },
     "Nanit" : {
       "comment" : "App title"
+    },
+    "Pick attachment(-s)" : {
+      "comment" : "Attachments alert title"
     },
     "Picture" : {
       "comment" : "Picture button label"

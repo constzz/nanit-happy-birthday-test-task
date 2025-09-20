@@ -1,8 +1,17 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Attachments" : {
+      "comment" : "Attachments alert title"
+    },
     "Birthday" : {
       "comment" : "Birthday label"
+    },
+    "Camera" : {
+      "comment" : "Camera action"
+    },
+    "Cancel" : {
+      "comment" : "Cancel action"
     },
     "clear" : {
       "extractionState" : "manual",
@@ -18,11 +27,20 @@
     "Clear" : {
       "comment" : "Clear button for date picker"
     },
+    "Documents" : {
+      "comment" : "Documents action"
+    },
     "Done" : {
       "comment" : "Done button for date picker"
     },
     "Enter name" : {
       "comment" : "Name input placeholder"
+    },
+    "Give Access to Camera" : {
+      "comment" : "Camera access action"
+    },
+    "Library" : {
+      "comment" : "Library action"
     },
     "Name" : {
       "comment" : "Name label"

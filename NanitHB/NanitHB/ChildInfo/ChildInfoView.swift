@@ -6,15 +6,23 @@
 //
 
 import SwiftUI
-import UIKit
+import Combine
 
 struct ChildInfoView: View {
+    private var viewModel: any ChildInfoViewModelProtocol
+    
     @State private var name: String = ""
     @State private var birthday: Date? = nil
-    @State private var showBirthdayScreen: Bool = false
     @State private var picture: Image? = nil
+    @State private var showBirthdayScreen: Bool = false
     @State private var showImagePicker: Bool = false
-    @State private var showInlineDatePicker: Bool = false
+    @State private var canShowBirthdayScreen: Bool = false
+    
+    @State private var cancellables: Set<AnyCancellable> = []
+    
+    init(viewModel: any ChildInfoViewModelProtocol) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         VStack(spacing: 24) {
@@ -27,16 +35,21 @@ struct ChildInfoView: View {
                 Text(NSLocalizedString("Name", comment: "Name label"))
                     .font(.headline)
                 TextField(NSLocalizedString("Enter name", comment: "Name input placeholder"), text: $name)
+                    .onChange(of: name) { _, newName in viewModel.setName(newName) }
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                 
                 Text(NSLocalizedString("Birthday", comment: "Birthday label"))
                     .font(.headline)
                 BirthdayInputField(date: $birthday)
+                    .onChange(of: birthday) { _, newBirthday in
+                        viewModel.setBirthday(newBirthday)
+                    }
                     .frame(height: 44)
             }
             
             Button(action: {
                 showImagePicker = true
+                viewModel.setShowImagePicker(true)
             }) {
                 HStack {
                     if let picture = picture {
@@ -51,34 +64,21 @@ struct ChildInfoView: View {
                     Text(NSLocalizedString("Picture", comment: "Picture button label"))
                 }
             }
-            .buttonStyle(.bordered)            
+            .buttonStyle(.bordered)
             Button(NSLocalizedString("Show birthday screen", comment: "Show birthday screen button")) {
                 showBirthdayScreen = true
+                viewModel.setShowBirthdayScreen(true)
             }
-            .disabled(name.isEmpty || birthday == nil)
+            .disabled(!canShowBirthdayScreen)
             .buttonStyle(.borderedProminent)
             .padding(.top, 16)
         }
         .padding()
-        .sheet(isPresented: $showInlineDatePicker) {
-            VStack {
-                DatePicker("Select birthday", selection: Binding(get: {
-                    birthday ?? Date()
-                }, set: { newDate in
-                    birthday = newDate
-                }), displayedComponents: .date)
-                .datePickerStyle(.wheel)
-                .labelsHidden()
-                Text(DateFormatter.localizedString(from: birthday ?? Date(), dateStyle: .medium, timeStyle: .none))
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .padding(.top)
-                Button("Done") {
-                    showInlineDatePicker = false
-                }
-                .padding()
-            }
-            .padding()
-        }
+        .onReceive(viewModel.picturePublisher) { self.picture = $0 }
+        .onReceive(viewModel.showBirthdayScreenPublisher) { self.showBirthdayScreen = $0 }
+        .onReceive(viewModel.showImagePickerPublisher) { self.showImagePicker = $0 }
+        .onReceive(viewModel.canShowBirthdayScreenPublisher) { self.canShowBirthdayScreen = $0 }
+        .onReceive(viewModel.birthdayPublisher) { self.birthday = $0 }
+        .onReceive(viewModel.namePublisher) { self.name = $0 }
     }
 }

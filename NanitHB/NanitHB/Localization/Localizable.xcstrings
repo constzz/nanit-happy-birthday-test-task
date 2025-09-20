@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "Birthday" : {
-
+      "comment" : "Birthday label"
     },
     "clear" : {
       "extractionState" : "manual",
@@ -22,22 +22,22 @@
       "comment" : "Done button for date picker"
     },
     "Enter name" : {
-
+      "comment" : "Name input placeholder"
     },
     "Name" : {
-
+      "comment" : "Name label"
     },
     "Nanit" : {
-
+      "comment" : "App title"
     },
     "Picture" : {
-
+      "comment" : "Picture button label"
     },
     "Select birthday" : {
       "comment" : "Birthday input placeholder"
     },
     "Show birthday screen" : {
-
+      "comment" : "Show birthday screen button"
     }
   },
   "version" : "1.0"

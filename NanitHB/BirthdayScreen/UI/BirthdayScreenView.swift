@@ -126,19 +126,19 @@ struct BirthdayScreenView: View {
 }
 
 #Preview {
-    BirthdayScreenView(viewModel: BirthdayScreenViewModel(input: .init(name: "Username", birthdayDate: .now, avatar: nil, theme: .elephant), repository: ChildInfoRepository(userDefaults: .standard, persistentStorage: .shared), onBack: {}))
+    BirthdayScreenView(viewModel: BirthdayScreenViewModel(input: .init(name: "Username", birthdayDate: .now, avatar: nil), theme: .elephant, repository: ChildInfoRepository(userDefaults: .standard, persistentStorage: .shared), onBack: {}))
 }
 
 #Preview {
-    BirthdayScreenView(viewModel: BirthdayScreenViewModel(input: .init(name: "bla bla blabla bla blabla bla blabla bla blabla bla bla", birthdayDate: .init(timeInterval: -60*60*24*364, since: .now), avatar: nil, theme: .fox), repository: ChildInfoRepository(userDefaults: .standard, persistentStorage: .shared), onBack: {}))
+    BirthdayScreenView(viewModel: BirthdayScreenViewModel(input: .init(name: "bla bla blabla bla blabla bla blabla bla blabla bla bla", birthdayDate: .init(timeInterval: -60*60*24*364, since: .now), avatar: nil), theme: .fox, repository: ChildInfoRepository(userDefaults: .standard, persistentStorage: .shared), onBack: {}))
 }
 
 #Preview {
-    BirthdayScreenView(viewModel: BirthdayScreenViewModel(input: .init(name: "Cristiano Ronaldo", birthdayDate: .init(timeInterval: -60*60*24*366, since: .now), avatar: nil, theme: .fox), repository: ChildInfoRepository(userDefaults: .standard, persistentStorage: .shared), onBack: {}))
+    BirthdayScreenView(viewModel: BirthdayScreenViewModel(input: .init(name: "Cristiano Ronaldo", birthdayDate: .init(timeInterval: -60*60*24*366, since: .now), avatar: nil), theme: .fox, repository: ChildInfoRepository(userDefaults: .standard, persistentStorage: .shared), onBack: {}))
 }
 
 #Preview {
-    BirthdayScreenView(viewModel: BirthdayScreenViewModel(input: .init(name: "Username", birthdayDate: .init(timeInterval: -8000000, since: .now), avatar: nil, theme: .pelican), repository: ChildInfoRepository(userDefaults: .standard, persistentStorage: .shared), onBack: {}))
+    BirthdayScreenView(viewModel: BirthdayScreenViewModel(input: .init(name: "Username", birthdayDate: .init(timeInterval: -8000000, since: .now), avatar: nil), theme: .pelican, repository: ChildInfoRepository(userDefaults: .standard, persistentStorage: .shared), onBack: {}))
 }
 
 private extension BirthdayScreenView {

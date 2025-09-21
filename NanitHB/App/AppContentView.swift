@@ -18,8 +18,7 @@ struct AppContentView: View {
                     router.navigate(to: .birthdayScreen(.init(
                         name: output.name,
                         birthdayDate: output.birthday,
-                        avatar: output.avatar,
-                        theme: .allCases.randomElement() ?? .elephant
+                        avatar: output.avatar
                     )))
                 }
             )

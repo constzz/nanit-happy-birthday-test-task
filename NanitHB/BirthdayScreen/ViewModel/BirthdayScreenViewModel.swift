@@ -34,12 +34,12 @@ final class BirthdayScreenViewModel: BirthdayScreenViewModelProtocol {
         let name: String
         let birthdayDate: Date
         let avatar: FileCached?
-        let theme: BirthdayTheme
     }
     
     // MARK: - Init
     init(
         input: Input,
+        theme: BirthdayTheme,
         repository: ChildInfoRepositoryProtocol,
         onBack: @escaping () -> Void
     ) {
@@ -47,7 +47,7 @@ final class BirthdayScreenViewModel: BirthdayScreenViewModelProtocol {
         self.onBack = onBack
         self.input = input
         let diffComponents = Self.calendar.dateComponents([.month, .year], from: input.birthdayDate, to: .now)
-        self.theme = input.theme
+        self.theme = theme
         self.ageTitleStartText = Self.makeAgeTitleStartText(name: input.name)
         self.ageNumber = Self.makeAgeNumber(diffComponents: diffComponents)
         self.ageTitleEndText = Self.makeAgeTitleEndText(diffComponents: diffComponents)

@@ -15,9 +15,10 @@ final class AppContainer {
     }()
     
     private var childInfoViewModel: ChildInfoViewModelProtocol?
-    private var birthdayScreenViewModel: BirthdayScreenViewModelProtocol?
     
-    func makeChildInfoScreenViewModel(showBirthdayScreenAction: @escaping (ChildInfoViewModel.Output) -> Void) -> ChildInfoViewModelProtocol {
+    func makeChildInfoScreenViewModel(
+        showBirthdayScreenAction: @escaping (ChildInfoViewModel.Output) -> Void
+    ) -> ChildInfoViewModelProtocol {
         if let existingViewModel = childInfoViewModel {
             return existingViewModel
         }
@@ -33,23 +34,12 @@ final class AppContainer {
         input: BirthdayScreenViewModel.Input,
         onBack: @escaping () -> Void
     ) -> any BirthdayScreenViewModelProtocol {
-        if let existingViewModel = birthdayScreenViewModel {
-            return existingViewModel
-        }
         let viewModel = BirthdayScreenViewModel(
             input: input,
+            theme: .allCases.randomElement() ?? .elephant,
             repository: childInfoRepository,
-            onBack: { [weak self] in
-                onBack()
-                self?.birthdayScreenViewModel = nil
-            }
+            onBack: { onBack() }
         )
-        birthdayScreenViewModel = viewModel
         return viewModel
-    }
-    
-    func resetViewModels() {
-        childInfoViewModel = nil
-        birthdayScreenViewModel = nil
     }
 }

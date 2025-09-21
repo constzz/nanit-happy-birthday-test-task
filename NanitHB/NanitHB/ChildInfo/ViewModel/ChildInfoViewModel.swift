@@ -56,7 +56,7 @@ final class ChildInfoViewModel: ChildInfoViewModelProtocol {
     func setPicture(_ fileCached: FileCached?) {
         if let fileCached = fileCached {
             repository.save(fileCached: fileCached)
-            if let data = fileCached.data ?? (try? Data(contentsOf: fileCached.url)),
+            if let data = fileCached.data,
                let uiImage = UIImage(data: data) {
                 pictureSubject.send(Image(uiImage: uiImage))
             } else {

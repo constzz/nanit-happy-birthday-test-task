@@ -39,7 +39,7 @@ final class ChildInfoRepository: ChildInfoRepositoryProtocol {
     
     func save(fileCached: FileCached) {
         // Instead of saving directly, we'll copy the file to our cache with our filename
-        if let data = fileCached.data ?? (try? Data(contentsOf: fileCached.url)) {
+        if let data = fileCached.data {
             _ = persistentStorage.saveToCache(data: data, fileName: Keys.imageFileName)
         }
     }

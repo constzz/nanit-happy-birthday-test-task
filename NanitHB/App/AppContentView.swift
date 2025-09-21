@@ -1,0 +1,41 @@
+//
+//  ContentView.swift
+//  NanitHB
+//
+//  Created by Konstantin Bezzemelnyi on 20.09.2025.
+//
+
+import SwiftUI
+
+struct AppContentView: View {
+    @StateObject private var router = Router<AppRoute>()
+    private let container = AppContainer.shared
+    
+    var body: some View {
+        NavigationStack(path: $router.path) {
+            ChildInfoScreenView(
+                viewModel: container.makeChildInfoScreenViewModel { output in
+                    router.navigate(to: .birthdayScreen(.init(
+                        name: output.name,
+                        birthdayDate: output.birthday,
+                        avatar: output.avatar
+                    )))
+                }
+            )
+            .navigationDestination(for: AppRoute.self) { route in
+                switch route {
+                case .birthdayScreen(let input):
+                    BirthdayScreenView(
+                        viewModel: container.makeBirthdayScreenViewModel(
+                            input: input,
+                                onBack: { router.navigateBack() }
+                            ))
+                }
+            }
+        }
+    }
+}
+
+#Preview {
+    AppContentView()
+}

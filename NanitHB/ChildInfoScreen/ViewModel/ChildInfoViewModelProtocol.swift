@@ -9,10 +9,11 @@ import Foundation
 import SwiftUI
 import Combine
 
+@MainActor
 protocol ChildInfoViewModelProtocol {
     var namePublisher: AnyPublisher<String, Never> { get }
     var birthdayPublisher: AnyPublisher<Date?, Never> { get }
-    var picturePublisher: AnyPublisher<FileCached?, Never> { get }
+    var picturePublisher: AnyPublisher<Image?, Never> { get }
     var canShowBirthdayScreenPublisher: AnyPublisher<Bool, Never> { get }
 
     func setName(_ name: String)

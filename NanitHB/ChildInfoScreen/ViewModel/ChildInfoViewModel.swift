@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import Combine
 
 final class ChildInfoViewModel: ChildInfoViewModelProtocol {
@@ -18,10 +19,10 @@ final class ChildInfoViewModel: ChildInfoViewModelProtocol {
     
     private let nameSubject = CurrentValueSubject<String, Never>("")
     private let birthdaySubject = CurrentValueSubject<Date?, Never>(nil)
-    private let pictureSubject = CurrentValueSubject<FileCached?, Never>(nil)
+    private let pictureSubject = CurrentValueSubject<Image?, Never>(nil)
+    private let savedFileSubject = CurrentValueSubject<FileCached?, Never>(nil)
     
     private let showBirthdayScreenAction: (Output) -> Void
-    
     private let repository: ChildInfoRepositoryProtocol
     
     init(repository: ChildInfoRepositoryProtocol, showBirthdayScreenAction: @escaping (Output) -> Void) {
@@ -35,13 +36,17 @@ final class ChildInfoViewModel: ChildInfoViewModelProtocol {
             birthdaySubject.send(birthday)
         }
         if let fileCached = repository.getFileCached() {
-            pictureSubject.send(fileCached)
+            Task(priority: .userInitiated) {
+                let image = await ImageProcessor.convertToImage(fileCached)
+                pictureSubject.send(image)
+            }
+            savedFileSubject.send(fileCached)
         }
     }
     
     var namePublisher: AnyPublisher<String, Never> { nameSubject.eraseToAnyPublisher() }
     var birthdayPublisher: AnyPublisher<Date?, Never> { birthdaySubject.eraseToAnyPublisher() }
-    var picturePublisher: AnyPublisher<FileCached?, Never> { pictureSubject.eraseToAnyPublisher() }
+    var picturePublisher: AnyPublisher<Image?, Never> { pictureSubject.eraseToAnyPublisher() }
     var canShowBirthdayScreenPublisher: AnyPublisher<Bool, Never> {
         Publishers.CombineLatest(nameSubject, birthdaySubject)
             .map { !$0.0.isEmpty && $0.1 != nil }
@@ -64,9 +69,14 @@ final class ChildInfoViewModel: ChildInfoViewModelProtocol {
     func setPicture(_ fileCached: FileCached?) {
         if let fileCached = fileCached {
             repository.save(fileCached: fileCached)
-            pictureSubject.send(fileCached)
+            Task(priority: .userInitiated) {
+                let image = await ImageProcessor.convertToImage(fileCached)
+                pictureSubject.send(image)
+            }
+            savedFileSubject.send(fileCached)
         } else {
             pictureSubject.send(nil)
+            savedFileSubject.send(nil)
         }
     }
     
@@ -78,6 +88,6 @@ final class ChildInfoViewModel: ChildInfoViewModelProtocol {
             return Logger.error("Error state to showBirthdayScreen without name or birthday.")
         }
               
-        showBirthdayScreenAction(.init(name: name, birthday: birthday, avatar: pictureSubject.value))
+        showBirthdayScreenAction(.init(name: name, birthday: birthday, avatar: savedFileSubject.value))
     }
 }

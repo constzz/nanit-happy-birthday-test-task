@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-struct ChildInfoView: View {
+struct ChildInfoScreenView: View {
     private var viewModel: any ChildInfoViewModelProtocol
     
     @State private var name: String = ""

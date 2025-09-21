@@ -45,6 +45,13 @@ struct BirthdayScreen: View {
                     .frame(width: 70)
                 
                 Spacer()
+                
+                Button("Share the news", image: .shareIcon, action: {
+                    // TODO: Implement share action
+                })
+                .buttonStyle(BirthdayShareButtonStyle())
+                
+                Spacer().frame(height: 53)
             }
         }
         .background(viewModel.theme.bgColor)

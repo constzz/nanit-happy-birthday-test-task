@@ -4,15 +4,17 @@
 
 ### iPhone 16 Pro
 <p align="row">
-<img src="https://github.com/constzz/nanit-happy-birthday-test-task/blob/master/NanitHB/Screenshots/Simulator%20Screenshot%20-%20iPhone%2016%20Pro%20-%202025-09-21%20at%2021.40.41.png" height="400" alt="iPhone 16 Pro - Main Screen">
-<img src="https://github.com/constzz/nanit-happy-birthday-test-task/blob/master/NanitHB/Screenshots/Simulator%20Screenshot%20-%20iPhone%2016%20Pro%20-%202025-09-21%20at%2021.40.47.png" height="400" alt="iPhone 16 Pro - Child Info">
-<img src="https://github.com/constzz/nanit-happy-birthday-test-task/blob/master/NanitHB/Screenshots/Simulator%20Screenshot%20-%20iPhone%2016%20Pro%20-%202025-09-21%20at%2021.42.03.png" height="400" alt="iPhone 16 Pro - Birthday Screen">
+<img src="https://github.com/constzz/nanit-happy-birthday-test-task/blob/master/NanitHB/Screenshots/Simulator%20Screenshot%20-%20iPhone%2016%20Pro%20-%202025-09-21%20at%2022.41.44.png" height="400" alt="iPhone 16 Pro - Child Info Screen">
+<img src="https://github.com/constzz/nanit-happy-birthday-test-task/blob/master/NanitHB/Screenshots/Simulator%20Screenshot%20-%20iPhone%2016%20Pro%20-%202025-09-21%20at%2022.41.49.png" height="400" alt="iPhone 16 Pro - Birthday Screen">
+<img src="https://github.com/constzz/nanit-happy-birthday-test-task/blob/master/NanitHB/Screenshots/Simulator%20Screenshot%20-%20iPhone%2016%20Pro%20-%202025-09-21%20at%2022.42.02.png" height="400" alt="iPhone 16 Pro - Error">
 </p>
 
 ### iPhone SE (3rd generation)
 <p align="row">
-<img src="https://github.com/constzz/nanit-happy-birthday-test-task/blob/master/NanitHB/Screenshots/Simulator%20Screenshot%20-%20iPhone%20SE%20(3rd%20generation)%20-%202025-09-21%20at%2021.45.14.png" height="400" alt="iPhone SE - Main Screen">
-<img src="https://github.com/constzz/nanit-happy-birthday-test-task/blob/master/NanitHB/Screenshots/Simulator%20Screenshot%20-%20iPhone%20SE%20(3rd%20generation)%20-%202025-09-21%20at%2021.45.19.png" height="400" alt="iPhone SE - Child Info">
+<img src="https://github.com/constzz/nanit-happy-birthday-test-task/blob/master/NanitHB/Screenshots/Simulator%20Screenshot%20-%20iPhone%20SE%20(3rd%20generation)%20-%202025-09-21%20at%2022.44.03.png" height="400" alt="iPhone SE - Empty Child Info Screen">
+<img src="https://github.com/constzz/nanit-happy-birthday-test-task/blob/master/NanitHB/Screenshots/Simulator%20Screenshot%20-%20iPhone%20SE%20(3rd%20generation)%20-%202025-09-21%20at%2022.42.31.png" height="400" alt="iPhone SE - Child Info Screen">
+<img src="https://github.com/constzz/nanit-happy-birthday-test-task/blob/master/NanitHB/Screenshots/Simulator%20Screenshot%20-%20iPhone%20SE%20(3rd%20generation)%20-%202025-09-21%20at%2022.44.15.png" height="400" alt="iPhone SE - Birthday Screen">
+<img src="https://github.com/constzz/nanit-happy-birthday-test-task/blob/master/NanitHB/Screenshots/Simulator%20Screenshot%20-%20iPhone%20SE%20(3rd%20generation)%20-%202025-09-21%20at%2022.42.36.png" height="400" alt="iPhone SE - Birthday Screen">
 </p>
 
 ## Architecture

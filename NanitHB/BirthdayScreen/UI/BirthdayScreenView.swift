@@ -32,7 +32,6 @@ struct BirthdayScreenView: View {
         ) { snapshotContext in
             ZStack(alignment: .bottom) {
                 VStack(spacing: 0) {
-                    Spacer().frame(height: 20)
                     AgeView(
                         ageTitleStartText: viewModel.ageTitleStartText,
                         ageTitleEndText: viewModel.ageTitleEndText,
@@ -91,7 +90,20 @@ struct BirthdayScreenView: View {
                 }
             }
             .background(viewModel.theme.bgColor)
+            .safeAreaInset(edge: .top) {
+                HStack {
+                    Button(action: {
+                        viewModel.onBackTapped()
+                    }) {
+                        ZStack { Image(.backIcon) }
+                    }
+                    .padding(.leading, 16)
+                    Spacer()
+                }
+                .padding(.top, 8)
+            }
         }
+        .navigationBarBackButtonHidden()
         .sheet(isPresented: $showShareSheet, onDismiss: { shareImage = nil }) {
             if let image = shareImage {
                 ShareSheet(activityItems: [image])

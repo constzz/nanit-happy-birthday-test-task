@@ -9,29 +9,26 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var router = Router<AppRoute>()
-    private let childInfoRepository = ChildInfoRepository(
-        userDefaults: .standard,
-        persistentStorage: .shared
-    )
+    private let container = AppContainer.shared
     
     var body: some View {
         NavigationStack(path: $router.path) {
             ChildInfoView(
-                viewModel:
-                    ChildInfoViewModel(
-                        repository: childInfoRepository,
-                        showBirthdayScreenAction: { output in
-                            router.navigate(to: .birthdayScreen(.init(name: output.name, birthdayDate: output.birthday, avatar: output.avatar, theme: .allCases.randomElement() ?? .elephant)))
-                        })
+                viewModel: container.makeChildInfoScreenViewModel { output in
+                    router.navigate(to: .birthdayScreen(.init(
+                        name: output.name,
+                        birthdayDate: output.birthday,
+                        avatar: output.avatar,
+                        theme: .allCases.randomElement() ?? .elephant
+                    )))
+                }
             )
             .navigationDestination(for: AppRoute.self) { route in
                 switch route {
                 case .birthdayScreen(let input):
                     BirthdayScreen(
-                        viewModel:
-                            BirthdayScreenViewModel(
-                                input: input,
-                                repository: childInfoRepository,
+                        viewModel: container.makeBirthdayScreenViewModel(
+                            input: input,
                                 onBack: { router.navigateBack() }
                             ))
                 }

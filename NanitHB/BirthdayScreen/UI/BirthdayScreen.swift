@@ -91,20 +91,28 @@ struct BirthdayScreen: View {
         }
         .overlay {
             if isLoadingSnapshot {
-                ProgressView("Preparing image...")
-                    .progressViewStyle(CircularProgressViewStyle())
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color.black.opacity(0.2))
+                ZStack {
+                    Color.nanitWhite.opacity(0.5)
+                        .ignoresSafeArea()
+                    ProgressView("Preparing image...")
+                        .foregroundStyle(.nanitMainText)
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
             }
             if let error = snapshotError {
-                VStack {
-                    Text("Error: \(error)")
-                        .foregroundColor(.red)
-                        .padding()
-                    Button("Dismiss") { snapshotError = nil }
+                ZStack {
+                    Color.black.opacity(0.5)
+                        .ignoresSafeArea()
+                        .blur(radius: 2)
+                    VStack {
+                        Text("Error: \(error)")
+                            .foregroundColor(.nanitWhite)
+                            .padding()
+                        Button("Dismiss") { snapshotError = nil }
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.black.opacity(0.2))
             }
         }
     }

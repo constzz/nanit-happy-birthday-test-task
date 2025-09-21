@@ -106,6 +106,15 @@
     "Nanit" : {
       "comment" : "App title"
     },
+    "OK" : {
+      "comment" : "OK button"
+    },
+    "Oops! That's a bit too old!" : {
+      "comment" : "Alert title for age > 12"
+    },
+    "Our birthday celebration is designed for kids up to 12 years old. Please select a more recent date. 🎈" : {
+      "comment" : "Alert message for age > 12"
+    },
     "Pick attachment(-s)" : {
       "comment" : "Attachments alert title"
     },

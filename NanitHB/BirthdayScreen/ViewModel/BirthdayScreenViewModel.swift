@@ -10,22 +10,25 @@ import Foundation
 import SwiftUI
 import Combine
 
+@MainActor
 final class BirthdayScreenViewModel: BirthdayScreenViewModelProtocol {
-    var imagePublisher: AnyPublisher<FileCached?, Never> {
+    var imagePublisher: AnyPublisher<Image?, Never> {
         imageSubject.eraseToAnyPublisher()
     }
     
-    private let imageSubject = CurrentValueSubject<FileCached?, Never>(nil)
+    private let imageSubject = CurrentValueSubject<Image?, Never>(nil)
+    private var cancellables = Set<AnyCancellable>()
     
-    private(set) var ageTitleStartText: String
-    private(set) var ageNumber: Int
-    private(set) var ageTitleEndText: String
+    @Published private(set) var ageTitleStartText: String
+    @Published private(set) var ageNumber: Int
+    @Published private(set) var ageTitleEndText: String
     let theme: BirthdayTheme
     
     // MARK: - Properties
     private let repository: ChildInfoRepositoryProtocol
     private static let calendar: Calendar = .current
     private let onBack: () -> Void
+    private let input: Input
     
     struct Input: Hashable {
         let name: String
@@ -42,14 +45,21 @@ final class BirthdayScreenViewModel: BirthdayScreenViewModelProtocol {
     ) {
         self.repository = repository
         self.onBack = onBack
+        self.input = input
         let diffComponents = Self.calendar.dateComponents([.month, .year], from: input.birthdayDate, to: .now)
         self.theme = input.theme
         self.ageTitleStartText = Self.makeAgeTitleStartText(name: input.name)
         self.ageNumber = Self.makeAgeNumber(diffComponents: diffComponents)
         self.ageTitleEndText = Self.makeAgeTitleEndText(diffComponents: diffComponents)
-        if let image = repository.getFileCached() {
-            imageSubject.send(image)
+        
+        if let file = repository.getFileCached() {
+            Task(priority: .userInitiated) {
+                let image = await ImageProcessor.convertToImage(file)
+                imageSubject.send(image)
+            }
         }
+        
+        setupObservations()
     }
     
     func onBackTapped() {
@@ -59,8 +69,44 @@ final class BirthdayScreenViewModel: BirthdayScreenViewModelProtocol {
     func setImage(file: FileCached?) {
         if let file {
             repository.save(fileCached: file)
+            Task(priority: .userInitiated) {
+                let image = await ImageProcessor.convertToImage(file)
+                imageSubject.send(image)
+            }
+        } else {
+            imageSubject.send(nil)
         }
-        imageSubject.send(file)
+    }
+    
+    private func setupObservations() {
+        repository.namePublisher
+            .sink { [weak self] newName in
+                guard let self = self else { return }
+                self.ageTitleStartText = Self.makeAgeTitleStartText(name: newName)
+            }
+            .store(in: &cancellables)
+        
+        repository.birthdayPublisher
+            .sink { [weak self] newDate in
+                guard let self = self, let newDate = newDate else { return }
+                let diffComponents = Self.calendar.dateComponents([.month, .year], from: newDate, to: .now)
+                self.ageNumber = Self.makeAgeNumber(diffComponents: diffComponents)
+                self.ageTitleEndText = Self.makeAgeTitleEndText(diffComponents: diffComponents)
+            }
+            .store(in: &cancellables)
+            
+        repository.imagePublisher
+            .sink { [weak self] fileCached in
+                guard let self = self, let fileCached = fileCached else {
+                    self?.imageSubject.send(nil)
+                    return
+                }
+                Task(priority: .userInitiated) {
+                    let image = await ImageProcessor.convertToImage(fileCached)
+                    self.imageSubject.send(image)
+                }
+            }
+            .store(in: &cancellables)
     }
 }
 

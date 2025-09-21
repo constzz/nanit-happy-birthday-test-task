@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 struct ChildInfoAttachAvatarView: View {
-    let picturePublisher: AnyPublisher<FileCached?, Never>
+    let picturePublisher: AnyPublisher<Image?, Never>
     let showAttachmentsPickerAction: () -> Void
     @State private var picture: Image?
     
@@ -31,12 +31,8 @@ struct ChildInfoAttachAvatarView: View {
             }
         }
         .buttonStyle(.bordered)
-        .onReceive(picturePublisher) { fileCached in
-            if let data = fileCached?.data, let image = UIImage(data: data) {
-                self.picture = Image(uiImage: image)
-            } else {
-                self.picture = nil
-            }
+        .onReceive(picturePublisher) { image in
+            self.picture = image
         }
     }
 }

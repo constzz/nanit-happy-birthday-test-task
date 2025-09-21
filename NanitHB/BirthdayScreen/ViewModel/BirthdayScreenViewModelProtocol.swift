@@ -8,13 +8,14 @@
 import SwiftUI
 import Combine
 
+@MainActor
 protocol BirthdayScreenViewModelProtocol {
     var ageTitleStartText: String { get }
     var ageNumber: Int { get }
     var ageTitleEndText: String { get }
     var theme: BirthdayTheme { get }
     
-    var imagePublisher: AnyPublisher<FileCached?, Never> { get }
+    var imagePublisher: AnyPublisher<Image?, Never> { get }
     func setImage(file: FileCached?)
     func onBackTapped()
 }

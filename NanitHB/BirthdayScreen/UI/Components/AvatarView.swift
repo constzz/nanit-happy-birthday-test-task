@@ -18,7 +18,7 @@ struct AvatarView: View {
     }
     
     let birthdayTheme: BirthdayTheme
-    let picturePublisher: AnyPublisher<FileCached?, Never>
+    let picturePublisher: AnyPublisher<Image?, Never>
     let hideCameraIcon: Bool
     let action: () -> Void
     
@@ -51,13 +51,8 @@ struct AvatarView: View {
             .onTapGesture { self.action() }
         }
         .aspectRatio(1.0, contentMode: .fit)
-        .onReceive(picturePublisher) { fileCached in
-            if let data = fileCached?.data, let image = UIImage(data: data) {
-                self.picture = Image(uiImage: image)
-            } else {
-                self.picture = nil
-            }
-            
+        .onReceive(picturePublisher) { image in
+            self.picture = image
         }
     }
 }

@@ -6,8 +6,13 @@
 //
 
 import Foundation
+import Combine
 
 protocol ChildInfoRepositoryProtocol {
+    var namePublisher: AnyPublisher<String, Never> { get }
+    var birthdayPublisher: AnyPublisher<Date?, Never> { get }
+    var imagePublisher: AnyPublisher<FileCached?, Never> { get }
+    
     func save(name: String)
     func save(birthday: Date)
     func save(fileCached: FileCached)

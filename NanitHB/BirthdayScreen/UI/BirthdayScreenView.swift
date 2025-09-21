@@ -60,6 +60,7 @@ struct BirthdayScreenView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .ignoresSafeArea()
+                    .allowsHitTesting(false)
 
                 
                 VStack(spacing: 0) {

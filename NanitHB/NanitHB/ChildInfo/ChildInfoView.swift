@@ -14,7 +14,6 @@ struct ChildInfoView: View {
     @State private var name: String = ""
     @State private var birthday: Date? = nil
     @State private var picture: Image? = nil
-    @State private var showBirthdayScreen: Bool = false
     @State private var showImagePicker: Bool = false
     @State private var canShowBirthdayScreen: Bool = false
     @StateObject private var attachmentsPicker = AttachmentsPickerPresenter()
@@ -50,14 +49,17 @@ struct ChildInfoView: View {
             }
             
             Button(action: {
-                attachmentsPicker.present(allowedAttachments: [
-                    .library(allowedMediaTypes: [.photo]),
-                    .camera(allowedMediaTypes: [.photo], camera: .rear, allowsEditing: true)
-                ], onPicked: { images in
-                    if let image = images.first {
-                        viewModel.setPicture(image)
-                    }
-                })
+                attachmentsPicker.present(
+                    allowedAttachments: [
+                        .library(allowedMediaTypes: [.photo]),
+                        .camera(allowedMediaTypes: [.photo], camera: .rear, allowsEditing: true)
+                    ],
+                    limit: 1,
+                    onPicked: { files in
+                        if let fileCached = files.first {
+                            viewModel.setPicture(fileCached)
+                        }
+                    })
             }) {
                 HStack {
                     if let picture = picture {
@@ -74,8 +76,6 @@ struct ChildInfoView: View {
             }
             .buttonStyle(.bordered)
             Button(NSLocalizedString("Show birthday screen", comment: "Show birthday screen button")) {
-                showBirthdayScreen = true
-                viewModel.setShowBirthdayScreen(true)
             }
             .disabled(!canShowBirthdayScreen)
             .buttonStyle(.borderedProminent)
@@ -83,8 +83,6 @@ struct ChildInfoView: View {
         }
         .padding()
         .onReceive(viewModel.picturePublisher) { self.picture = $0 }
-        .onReceive(viewModel.showBirthdayScreenPublisher) { self.showBirthdayScreen = $0 }
-        .onReceive(viewModel.showImagePickerPublisher) { self.showImagePicker = $0 }
         .onReceive(viewModel.canShowBirthdayScreenPublisher) { self.canShowBirthdayScreen = $0 }
         .onReceive(viewModel.birthdayPublisher) { self.birthday = $0 }
         .onReceive(viewModel.namePublisher) { self.name = $0 }

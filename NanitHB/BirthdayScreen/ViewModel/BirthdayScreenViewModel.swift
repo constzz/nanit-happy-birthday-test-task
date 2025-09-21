@@ -13,11 +13,8 @@ import Combine
 @MainActor
 final class BirthdayScreenViewModel: BirthdayScreenViewModelProtocol {
     var imagePublisher: AnyPublisher<Image?, Never> {
-        imageSubject.eraseToAnyPublisher()
+        repository.imagePublisher
     }
-    
-    private let imageSubject = CurrentValueSubject<Image?, Never>(nil)
-    private var cancellables = Set<AnyCancellable>()
     
     @Published private(set) var ageTitleStartText: String
     @Published private(set) var ageNumber: Int
@@ -29,6 +26,7 @@ final class BirthdayScreenViewModel: BirthdayScreenViewModelProtocol {
     private static let calendar: Calendar = .current
     private let onBack: () -> Void
     private let input: Input
+    private var cancellables = Set<AnyCancellable>()
     
     struct Input: Hashable {
         let name: String
@@ -52,13 +50,6 @@ final class BirthdayScreenViewModel: BirthdayScreenViewModelProtocol {
         self.ageNumber = Self.makeAgeNumber(diffComponents: diffComponents)
         self.ageTitleEndText = Self.makeAgeTitleEndText(diffComponents: diffComponents)
         
-        if let file = repository.getFileCached() {
-            Task(priority: .userInitiated) {
-                let image = await ImageProcessor.convertToImage(file)
-                imageSubject.send(image)
-            }
-        }
-        
         setupObservations()
     }
     
@@ -67,14 +58,8 @@ final class BirthdayScreenViewModel: BirthdayScreenViewModelProtocol {
     }
     
     func setImage(file: FileCached?) {
-        if let file {
+        if let file = file {
             repository.save(fileCached: file)
-            Task(priority: .userInitiated) {
-                let image = await ImageProcessor.convertToImage(file)
-                imageSubject.send(image)
-            }
-        } else {
-            imageSubject.send(nil)
         }
     }
     
@@ -92,19 +77,6 @@ final class BirthdayScreenViewModel: BirthdayScreenViewModelProtocol {
                 let diffComponents = Self.calendar.dateComponents([.month, .year], from: newDate, to: .now)
                 self.ageNumber = Self.makeAgeNumber(diffComponents: diffComponents)
                 self.ageTitleEndText = Self.makeAgeTitleEndText(diffComponents: diffComponents)
-            }
-            .store(in: &cancellables)
-            
-        repository.imagePublisher
-            .sink { [weak self] fileCached in
-                guard let self = self, let fileCached = fileCached else {
-                    self?.imageSubject.send(nil)
-                    return
-                }
-                Task(priority: .userInitiated) {
-                    let image = await ImageProcessor.convertToImage(fileCached)
-                    self.imageSubject.send(image)
-                }
             }
             .store(in: &cancellables)
     }

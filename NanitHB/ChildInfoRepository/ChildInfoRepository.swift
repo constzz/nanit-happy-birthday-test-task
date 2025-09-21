@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 final class ChildInfoRepository: ChildInfoRepositoryProtocol {
     private enum Keys {
@@ -20,11 +21,11 @@ final class ChildInfoRepository: ChildInfoRepositoryProtocol {
     
     private let nameSubject = CurrentValueSubject<String, Never>("")
     private let birthdaySubject = CurrentValueSubject<Date?, Never>(nil)
-    private let imageSubject = CurrentValueSubject<FileCached?, Never>(nil)
+    private let processedImageSubject = CurrentValueSubject<Image?, Never>(nil)
     
-    var namePublisher: AnyPublisher<String, Never> { nameSubject.eraseToAnyPublisher() }
-    var birthdayPublisher: AnyPublisher<Date?, Never> { birthdaySubject.eraseToAnyPublisher() }
-    var imagePublisher: AnyPublisher<FileCached?, Never> { imageSubject.eraseToAnyPublisher() }
+    var namePublisher: AnyPublisher<String, Never> { nameSubject.receive(on: DispatchQueue.main).eraseToAnyPublisher() }
+    var birthdayPublisher: AnyPublisher<Date?, Never> { birthdaySubject.receive(on: DispatchQueue.main).eraseToAnyPublisher() }
+    var imagePublisher: AnyPublisher<Image?, Never> { processedImageSubject.receive(on: DispatchQueue.main).eraseToAnyPublisher() }
     
     init(
         userDefaults: UserDefaults,
@@ -41,7 +42,10 @@ final class ChildInfoRepository: ChildInfoRepositoryProtocol {
         }
         if let url = persistentStorage.getCacheURL(for: Keys.imageFileName),
            let fileCached = try? FileCached.make(localURL: url) {
-            imageSubject.send(fileCached)
+            Task(priority: .userInitiated) {
+                let image = await ImageProcessor.convertToImage(fileCached)
+                processedImageSubject.send(image)
+            }
         }
     }
     
@@ -58,7 +62,10 @@ final class ChildInfoRepository: ChildInfoRepositoryProtocol {
     func save(fileCached: FileCached) {
         if let data = fileCached.data {
             _ = persistentStorage.saveToCache(data: data, fileName: Keys.imageFileName)
-            imageSubject.send(fileCached)
+            Task(priority: .userInitiated) {
+                let image = await ImageProcessor.convertToImage(fileCached)
+                processedImageSubject.send(image)
+            }
         }
     }
     

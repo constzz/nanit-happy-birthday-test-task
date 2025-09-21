@@ -7,11 +7,12 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 protocol ChildInfoRepositoryProtocol {
     var namePublisher: AnyPublisher<String, Never> { get }
     var birthdayPublisher: AnyPublisher<Date?, Never> { get }
-    var imagePublisher: AnyPublisher<FileCached?, Never> { get }
+    var imagePublisher: AnyPublisher<Image?, Never> { get }
     
     func save(name: String)
     func save(birthday: Date)

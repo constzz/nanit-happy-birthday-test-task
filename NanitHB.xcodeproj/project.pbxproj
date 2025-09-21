@@ -8,7 +8,7 @@
 
 /* Begin PBXFileReference section */
 		7F49730E2E8078BD001E96E6 /* NanitHB.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = NanitHB.xcodeproj; sourceTree = "<group>"; };
-		7F49745E2E807ADE001E96E6 /* NanitHB.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = NanitHB.xcodeproj; sourceTree = "<group>"; };
+		7F4974EB2E80905B001E96E6 /* NanitHB.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = NanitHB.xcodeproj; sourceTree = "<group>"; };
 		7F9DA3702E8057D500418146 /* NanitHB.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = NanitHB.xcodeproj; sourceTree = "<group>"; };
 		7F9DA3A82E8057DB00418146 /* NanitHB.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = NanitHB.xcodeproj; sourceTree = "<group>"; };
 		7FDE66E82E805FAA00A0FA3D /* NanitHB.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = NanitHB.xcodeproj; sourceTree = "<group>"; };
@@ -39,7 +39,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7F49745F2E807ADE001E96E6 /* Products */ = {
+		7F4974EC2E80905B001E96E6 /* Products */ = {
 			isa = PBXGroup;
 			name = Products;
 			sourceTree = "<group>";
@@ -137,12 +137,12 @@
 					ProjectRef = 7F9DA3702E8057D500418146 /* NanitHB.xcodeproj */;
 				},
 				{
-					ProductGroup = 7F49745F2E807ADE001E96E6 /* Products */;
-					ProjectRef = 7F49745E2E807ADE001E96E6 /* NanitHB.xcodeproj */;
-				},
-				{
 					ProductGroup = 7F49730F2E8078BD001E96E6 /* Products */;
 					ProjectRef = 7F49730E2E8078BD001E96E6 /* NanitHB.xcodeproj */;
+				},
+				{
+					ProductGroup = 7F4974EC2E80905B001E96E6 /* Products */;
+					ProjectRef = 7F4974EB2E80905B001E96E6 /* NanitHB.xcodeproj */;
 				},
 				{
 					ProductGroup = 7FDE66EA2E805FAA00A0FA3D /* Products */;

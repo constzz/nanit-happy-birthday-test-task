@@ -33,10 +33,10 @@ struct AgeView: View {
 }
 
 #Preview {
-    AgeView(ageTitleStartText: "Username", ageTitleEndText: "MONTHS", ageImage: ._0)
+    AgeView(ageTitleStartText: "Username", ageTitleEndText: "MONTHS", ageImage: .zero)
 }
 
 #Preview {
-    AgeView(ageTitleStartText: "Very long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long username here provided", ageTitleEndText: "MONTHS", ageImage: ._12)
+    AgeView(ageTitleStartText: "Very long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long username here provided", ageTitleEndText: "MONTHS", ageImage: .twelve)
 }
 

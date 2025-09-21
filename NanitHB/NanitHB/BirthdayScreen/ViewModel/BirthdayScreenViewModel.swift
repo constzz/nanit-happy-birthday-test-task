@@ -8,8 +8,15 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 final class BirthdayScreenViewModel: BirthdayScreenViewModelProtocol {
+    var imagePublisher: AnyPublisher<FileCached?, Never> {
+        imageSubject.eraseToAnyPublisher()
+    }
+    
+    private let imageSubject = CurrentValueSubject<FileCached?, Never>(nil)
+    
     private(set) var ageTitleStartText: String
     private(set) var ageNumber: Int
     private(set) var ageTitleEndText: String
@@ -41,6 +48,9 @@ final class BirthdayScreenViewModel: BirthdayScreenViewModelProtocol {
         self.ageTitleStartText = Self.makeAgeTitleStartText(name: input.name)
         self.ageNumber = Self.makeAgeNumber(forBirthday: input.birthdayDate)
         self.ageTitleEndText = Self.makeAgeTitleEndText(diffComponents: diffComponents)
+        if let image = repository.getFileCached() {
+            imageSubject.send(image)
+        }
     }
     
     func onBackTapped() {

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 protocol BirthdayScreenViewModelProtocol: ObservableObject {
     var ageTitleStartText: String { get }
@@ -13,7 +14,7 @@ protocol BirthdayScreenViewModelProtocol: ObservableObject {
     var ageTitleEndText: String { get }
     var theme: BirthdayTheme { get }
     
-    var image: FileCached? { get }
+    var imagePublisher: AnyPublisher<FileCached?, Never> { get }
     func setImage(file: FileCached?)
     func onBackTapped()
 }

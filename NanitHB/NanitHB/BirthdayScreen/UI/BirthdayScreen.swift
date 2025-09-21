@@ -26,7 +26,7 @@ struct BirthdayScreen: View {
                 Spacer().frame(height: 15)
                 
                 HStack {
-                    Spacer().frame(minWidth: 50)
+                    Spacer().frame(width: 50)
                     AvatarView(
                         birthdayTheme: viewModel.theme,
                         picturePublisher: viewModel.imagePublisher,
@@ -34,7 +34,7 @@ struct BirthdayScreen: View {
                         action: {
                             
                         })
-                    Spacer().frame(minWidth: 50)
+                    Spacer().frame(width: 50)
                 }
                 
                 Spacer().frame(height: 15)

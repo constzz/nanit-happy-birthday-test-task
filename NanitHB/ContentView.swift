@@ -13,7 +13,7 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack(path: $router.path) {
-            ChildInfoView(
+            ChildInfoScreenView(
                 viewModel: container.makeChildInfoScreenViewModel { output in
                     router.navigate(to: .birthdayScreen(.init(
                         name: output.name,
@@ -26,7 +26,7 @@ struct ContentView: View {
             .navigationDestination(for: AppRoute.self) { route in
                 switch route {
                 case .birthdayScreen(let input):
-                    BirthdayScreen(
+                    BirthdayScreenView(
                         viewModel: container.makeBirthdayScreenViewModel(
                             input: input,
                                 onBack: { router.navigateBack() }

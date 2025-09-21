@@ -4,13 +4,13 @@
 
 | Birthday Input Screen | Photo Selection | Share Preview |
 |:---:|:---:|:---:|
-| ![Birthday Input](/Screenshots/Simulator%20Screenshot%20-%20iPhone%2016%20Pro%20-%202025-09-21%20at%2021.40.41.png) | ![Photo Selection](/Screenshots/Simulator%20Screenshot%20-%20iPhone%2016%20Pro%20-%202025-09-21%20at%2021.40.47.png) | ![Share Preview](/Screenshots/Simulator%20Screenshot%20-%20iPhone%2016%20Pro%20-%202025-09-21%20at%2021.42.03.png) |
+| ![Birthday Input](https://github.com/constzz/nanit-happy-birthday-test-task/tree/master/NanitHB/Screenshots/Simulator%20Screenshot%20-%20iPhone%2016%20Pro%20-%202025-09-21%20at%2021.40.41.png) | ![Photo Selection](https://github.com/constzz/nanit-happy-birthday-test-task/tree/master/NanitHB/Screenshots/Simulator%20Screenshot%20-%20iPhone%2016%20Pro%20-%202025-09-21%20at%2021.40.47.png) | ![Share Preview](https://github.com/constzz/nanit-happy-birthday-test-task/tree/master/NanitHB/Screenshots/Simulator%20Screenshot%20-%20iPhone%2016%20Pro%20-%202025-09-21%20at%2021.42.03.png) |
 
 The app is also tested for smaller screens like iPhone SE:
 
 | Birthday Input (SE) | Photo Selection (SE) |
 |:---:|:---:|
-| ![Birthday Input SE](/Screenshots/Simulator%20Screenshot%20-%20iPhone%20SE%20(3rd%20generation)%20-%202025-09-21%20at%2021.45.14.png) | ![Photo Selection SE](/Screenshots/Simulator%20Screenshot%20-%20iPhone%20SE%20(3rd%20generation)%20-%202025-09-21%20at%2021.45.19.png) |
+| ![Birthday Input SE](https://github.com/constzz/nanit-happy-birthday-test-task/tree/master/NanitHB/Screenshots/Simulator%20Screenshot%20-%20iPhone%20SE%20(3rd%20generation)%20-%202025-09-21%20at%2021.45.14.png) | ![Photo Selection SE](https://github.com/constzz/nanit-happy-birthday-test-task/tree/master/NanitHB/Screenshots/Simulator%20Screenshot%20-%20iPhone%20SE%20(3rd%20generation)%20-%202025-09-21%20at%2021.45.19.png) |
 
 ## Architecture
 

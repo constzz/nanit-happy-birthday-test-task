@@ -71,20 +71,14 @@ private extension BirthdayScreenViewModel {
     }
     
     static func makeAgeTitleEndText(diffComponents: DateComponents) -> String {
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .full
-        formatter.allowedUnits = [.year, .month]
-        formatter.maximumUnitCount = 1
-        formatter.zeroFormattingBehavior = .dropAll
-        if let years = diffComponents.year, years > 0 {
-            let comps = DateComponents(year: years)
-            return formatter.string(from: comps)?.uppercased() ?? NSLocalizedString("birthday_year_fallback", comment: "Year fallback")
-        } else if let months = diffComponents.month {
-            let comps = DateComponents(month: months)
-            return formatter.string(from: comps)?.uppercased() ?? NSLocalizedString("birthday_month_fallback", comment: "Month fallback")
+        let years = diffComponents.year ?? 0
+        let months = diffComponents.month ?? 0
+        if years > 0 {
+            let key = years == 1 ? "birthday_year_old" : "birthday_years_old"
+            return String(format: NSLocalizedString(key, comment: "Year(s) old")).uppercased() + "!"
         } else {
-            Logger.error("Not expected to show the view to celebrate 0 months")
-            return NSLocalizedString("birthday_months_fallback", comment: "Months fallback")
+            let key = months == 1 ? "birthday_month_old" : "birthday_months_old"
+            return String(format: NSLocalizedString(key, comment: "Month(s) old")).uppercased() + "!"
         }
     }
     

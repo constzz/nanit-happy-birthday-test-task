@@ -4,11 +4,27 @@
     "Birthday" : {
       "comment" : "Birthday label"
     },
-    "birthday_month_fallback" : {
-      "comment" : "Month fallback"
+    "birthday_month_old" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MONTH OLD"
+          }
+        }
+      }
     },
-    "birthday_months_fallback" : {
-      "comment" : "Months fallback"
+    "birthday_months_old" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MONTHS OLD"
+          }
+        }
+      }
     },
     "birthday_today_is" : {
       "comment" : "Today (birthday) ... is",
@@ -21,8 +37,27 @@
         }
       }
     },
-    "birthday_year_fallback" : {
-      "comment" : "Year fallback"
+    "birthday_year_old" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "YEAR OLD"
+          }
+        }
+      }
+    },
+    "birthday_years_old" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "YEARS OLD"
+          }
+        }
+      }
     },
     "Camera" : {
       "comment" : "Camera action"

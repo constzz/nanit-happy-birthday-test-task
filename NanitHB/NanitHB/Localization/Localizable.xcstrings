@@ -4,6 +4,61 @@
     "Birthday" : {
       "comment" : "Birthday label"
     },
+    "birthday_month_old" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MONTH OLD"
+          }
+        }
+      }
+    },
+    "birthday_months_old" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MONTHS OLD"
+          }
+        }
+      }
+    },
+    "birthday_today_is" : {
+      "comment" : "Today (birthday) ... is",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TODAY %@ IS"
+          }
+        }
+      }
+    },
+    "birthday_year_old" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "YEAR OLD"
+          }
+        }
+      }
+    },
+    "birthday_years_old" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "YEARS OLD"
+          }
+        }
+      }
+    },
     "Camera" : {
       "comment" : "Camera action"
     },
@@ -53,6 +108,9 @@
     },
     "Select birthday" : {
       "comment" : "Birthday input placeholder"
+    },
+    "Share the news" : {
+
     },
     "Show birthday screen" : {
       "comment" : "Show birthday screen button"

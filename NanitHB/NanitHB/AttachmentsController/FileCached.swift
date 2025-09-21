@@ -7,14 +7,21 @@
 
 import Foundation
 
-public class FileCached {
+public class FileCached: Hashable {
     
     private enum Error: Swift.Error {
         case invalidData
     }
     
+    let id: UUID = .init()
     let url: URL
     let data: Data?
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(url)
+        hasher.combine(data)
+    }
     
     private init(url: URL, data: Data?) {
         self.url = url

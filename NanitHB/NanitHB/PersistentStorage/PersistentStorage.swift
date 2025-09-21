@@ -46,7 +46,6 @@ private extension PersistentStorage {
             return nil
         }
         let url = URL(fileURLWithPath: path).appendingPathComponent(fileName)
-        Logger.debug("Generated URL for \(directory): \(url)")
         return url
     }
     

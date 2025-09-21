@@ -46,7 +46,7 @@ final class BirthdayScreenViewModel: BirthdayScreenViewModelProtocol {
         let diffComponents = Self.calendar.dateComponents([.month, .year], from: input.birthdayDate, to: .now)
         self.theme = input.theme
         self.ageTitleStartText = Self.makeAgeTitleStartText(name: input.name)
-        self.ageNumber = Self.makeAgeNumber(forBirthday: input.birthdayDate)
+        self.ageNumber = Self.makeAgeNumber(diffComponents: diffComponents)
         self.ageTitleEndText = Self.makeAgeTitleEndText(diffComponents: diffComponents)
         if let image = repository.getFileCached() {
             imageSubject.send(image)
@@ -81,11 +81,10 @@ private extension BirthdayScreenViewModel {
         }
     }
     
-    static func makeAgeNumber(forBirthday birthday: Date, calendar: Calendar = .current) -> Int {
-        let components = calendar.dateComponents([.month, .year], from: birthday, to: .now)
-        if let years = components.year, years > 0 {
+    static func makeAgeNumber(diffComponents: DateComponents) -> Int {
+        if let years = diffComponents.year, years > 0 {
             return years
-        } else if let months = components.month {
+        } else if let months = diffComponents.month {
             return months
         } else {
             Logger.error("Not expected to show the view to celebrate 0 months")

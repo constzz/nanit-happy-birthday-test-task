@@ -26,7 +26,7 @@ struct BirthdayScreen: View {
                 Spacer().frame(height: 15)
                 
                 HStack {
-                    Spacer().frame(width: 50)
+                    Spacer().frame(minWidth: 50)
                     AvatarView(
                         birthdayTheme: viewModel.theme,
                         picturePublisher: viewModel.imagePublisher,
@@ -34,7 +34,7 @@ struct BirthdayScreen: View {
                         action: {
                             
                         })
-                    Spacer().frame(width: 50)
+                    Spacer().frame(minWidth: 50)
                 }
                 
                 Spacer().frame(height: 15)
@@ -47,7 +47,20 @@ struct BirthdayScreen: View {
                 Spacer()
             }
         }
+        .background(viewModel.theme.bgColor)
     }
+}
+
+#Preview {
+    BirthdayScreen(viewModel: BirthdayScreenViewModel(input: .init(name: "Username", birthdayDate: .now, avatar: nil, theme: .elephant), repository: ChildInfoRepository(userDefaults: .standard, persistentStorage: .shared), onBack: {}))
+}
+
+#Preview {
+    BirthdayScreen(viewModel: BirthdayScreenViewModel(input: .init(name: "Username", birthdayDate: .init(timeInterval: -60000000 * 6, since: .now), avatar: nil, theme: .fox), repository: ChildInfoRepository(userDefaults: .standard, persistentStorage: .shared), onBack: {}))
+}
+
+#Preview {
+    BirthdayScreen(viewModel: BirthdayScreenViewModel(input: .init(name: "Username", birthdayDate: .init(timeInterval: -8000000, since: .now), avatar: nil, theme: .pelican), repository: ChildInfoRepository(userDefaults: .standard, persistentStorage: .shared), onBack: {}))
 }
 
 private extension BirthdayScreen {
@@ -82,6 +95,17 @@ private extension BirthdayTheme {
             return .bgElephant
         case .fox:
             return .bgFox
+        }
+    }
+    
+    var bgColor: Color {
+        switch self {
+        case .pelican:
+            return .nanitBgBlue
+        case .elephant:
+            return .nanitBgYellow
+        case .fox:
+            return .nanitBgGreen
         }
     }
 }

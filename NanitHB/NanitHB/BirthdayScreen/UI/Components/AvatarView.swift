@@ -14,6 +14,7 @@ struct AvatarView: View {
     private enum Constants {
         static let iconSize: CGFloat = 36.0
         static let cameraIconAngle: Double = 45.0
+        static let circleBorderWidth: CGFloat = 5.38
     }
     
     let birthdayTheme: BirthdayTheme
@@ -37,6 +38,7 @@ struct AvatarView: View {
                     .aspectRatio(contentMode: .fill)
                     .clipShape(Circle())
             }
+            Circle().stroke(birthdayTheme.circleColor, lineWidth: Constants.circleBorderWidth)
             VStack {
                 Image(birthdayTheme.cameraIconImage).resizable().scaledToFit()
                     .frame(width: Constants.iconSize, height: Constants.iconSize, alignment: Alignment.top)
@@ -81,6 +83,17 @@ private extension BirthdayTheme {
             return .addPhotoYellow
         case .fox:
             return .addPhotoGreen
+        }
+    }
+    
+    var circleColor: Color {
+        switch self {
+        case .pelican:
+            return .nanitBlue
+        case .elephant:
+            return .nanitYellow
+        case .fox:
+            return .nanitGreen
         }
     }
 }

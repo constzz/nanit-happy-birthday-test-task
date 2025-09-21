@@ -8,9 +8,12 @@
 import SwiftUI
 
 protocol BirthdayScreenViewModelProtocol: ObservableObject {
-    var childName: String { get }
-    var age: String { get }
-    var ageUnit: String { get }
-    var backgroundColor: Color { get }
+    var ageTitleStartText: String { get }
+    var ageNumber: Int { get }
+    var ageTitleEndText: String { get }
+    var theme: BirthdayTheme { get }
+    
+    var image: FileCached? { get }
+    func setImage(file: FileCached?)
     func onBackTapped()
 }

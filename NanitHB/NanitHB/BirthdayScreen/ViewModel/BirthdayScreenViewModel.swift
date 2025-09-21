@@ -9,77 +9,77 @@
 import Foundation
 import SwiftUI
 
-
 final class BirthdayScreenViewModel: BirthdayScreenViewModelProtocol {
-    enum Theme: Int, CaseIterable {
-        case blue
-        case yellow
-        case green
-    }
+    private(set) var ageTitleStartText: String
+    private(set) var ageNumber: Int
+    private(set) var ageTitleEndText: String
+    private(set) var image: FileCached?
+    let theme: BirthdayTheme
     
     // MARK: - Properties
-    @Published internal var childName: String = ""
-    private var birthday: Date = .now
-    private let theme: Theme
     private let repository: ChildInfoRepositoryProtocol
+    private static let calendar: Calendar = .current
     private let onBack: () -> Void
     
+    struct Input: Hashable {
+        let name: String
+        let birthdayDate: Date
+        let avatar: FileCached?
+        let theme: BirthdayTheme
+    }
+    
     // MARK: - Init
-    init(repository: ChildInfoRepositoryProtocol,
-         onBack: @escaping () -> Void) {
+    init(
+        input: Input,
+        repository: ChildInfoRepositoryProtocol,
+        onBack: @escaping () -> Void
+    ) {
         self.repository = repository
         self.onBack = onBack
-        self.theme = Theme.allCases.randomElement() ?? .blue
-        
-        loadData()
-    }
-    
-    // MARK: - Private
-    private func loadData() {
-        guard let name = repository.getName(),
-              let birthday = repository.getBirthday() else {
-            // This should never happen as the screen should only be shown
-            // when we have both name and birthday
-            return
-        }
-        
-        self.childName = name
-        self.birthday = birthday
-    }
-    
-    // MARK: - Public
-    var age: String {
-        let components = Calendar.current.dateComponents([.month, .year], from: birthday, to: .now)
-        if let years = components.year, years > 0 {
-            return "\(years)"
-        } else if let months = components.month {
-            return "\(months)"
-        }
-        return "0"
-    }
-    
-    var ageUnit: String {
-        let components = Calendar.current.dateComponents([.year], from: birthday, to: .now)
-        if let years = components.year, years > 0 {
-            return years == 1 ? "Year" : "Years"
-        } else {
-            let months = Calendar.current.dateComponents([.month], from: birthday, to: .now).month ?? 0
-            return months == 1 ? "Month" : "Months"
-        }
-    }
-    
-    var backgroundColor: Color {
-        switch theme {
-        case .blue:
-            return Color(red: 0.44, green: 0.77, blue: 0.93)
-        case .yellow:
-            return Color(red: 1.0, green: 0.82, blue: 0.31)
-        case .green:
-            return Color(red: 0.67, green: 0.87, blue: 0.38)
-        }
+        let diffComponents = Self.calendar.dateComponents([.month, .year], from: input.birthdayDate, to: .now)
+        self.theme = input.theme
+        self.ageTitleStartText = Self.makeAgeTitleStartText(name: input.name)
+        self.ageNumber = Self.makeAgeNumber(forBirthday: input.birthdayDate)
+        self.ageTitleEndText = Self.makeAgeTitleEndText(diffComponents: diffComponents)
     }
     
     func onBackTapped() {
         onBack()
+    }
+    
+    func setImage(file: FileCached?) {
+        if let file {
+            repository.save(fileCached: file)
+        }
+        image = file
+    }
+}
+
+private extension BirthdayScreenViewModel {
+    static func makeAgeTitleStartText(name: String) -> String {
+        "TODAY \(name.uppercased()) IS"
+    }
+    
+    static func makeAgeTitleEndText(diffComponents: DateComponents) -> String {
+        if let years = diffComponents.year, years > 0 {
+            return years == 1 ? "YEAR" : "YEARS"
+        } else if let months = diffComponents.month {
+            return months == 1 ? "MONTH" : "MONTHS"
+        } else {
+            Logger.error("Not expected to show the view to celebrate 0 months")
+            return "MONTHS"
+        }
+    }
+    
+    static func makeAgeNumber(forBirthday birthday: Date, calendar: Calendar = .current) -> Int {
+        let components = calendar.dateComponents([.month, .year], from: birthday, to: .now)
+        if let years = components.year, years > 0 {
+            return years
+        } else if let months = components.month {
+            return months
+        } else {
+            Logger.error("Not expected to show the view to celebrate 0 months")
+            return 0
+        }
     }
 }

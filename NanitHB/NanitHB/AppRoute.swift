@@ -6,5 +6,5 @@
 //
 
 enum AppRoute: Hashable {
-    case birthdayScreen
+    case birthdayScreen(BirthdayScreenViewModel.Input)
 }

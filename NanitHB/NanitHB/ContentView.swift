@@ -20,20 +20,23 @@ struct ContentView: View {
                 viewModel:
                     ChildInfoViewModel(
                         repository: childInfoRepository,
-                        showBirthdayScreenAction: { router.navigate(to: .birthdayScreen) })
+                        showBirthdayScreenAction: { output in
+                            router.navigate(to: .birthdayScreen(.init(name: output.name, birthdayDate: output.birthday, avatar: output.avatar, theme: .allCases.randomElement() ?? .elephant)))
+                        })
             )
             .navigationDestination(for: AppRoute.self) { route in
                 switch route {
-                case .birthdayScreen:
+                case .birthdayScreen(let input):
                     BirthdayScreen(
                         viewModel:
                             BirthdayScreenViewModel(
+                                input: input,
                                 repository: childInfoRepository,
-                                onBack: { router.navigateBack() }))
+                                onBack: { router.navigateBack() }
+                            ))
                 }
             }
         }
-        .environmentObject(router)
     }
 }
 

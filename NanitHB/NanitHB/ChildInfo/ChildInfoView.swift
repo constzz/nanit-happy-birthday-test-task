@@ -47,8 +47,7 @@ struct ChildInfoView: View {
                     }
                     .frame(height: 44)
             }
-            
-            Button(action: {
+            ChildInfoAttachAvatarView(picturePublisher: viewModel.picturePublisher, showAttachmentsPickerAction: {
                 attachmentsPicker.present(
                     allowedAttachments: [
                         .library(allowedMediaTypes: [.photo]),
@@ -56,25 +55,10 @@ struct ChildInfoView: View {
                     ],
                     limit: 1,
                     onPicked: { files in
-                        if let fileCached = files.first {
-                            viewModel.setPicture(fileCached)
-                        }
+                        guard let fileCached = files.first else { return }
+                        viewModel.setPicture(fileCached)
                     })
-            }) {
-                HStack {
-                    if let picture = picture {
-                        picture
-                            .resizable()
-                            .frame(width: 40, height: 40)
-                            .clipShape(Circle())
-                    } else {
-                        Image(systemName: "photo")
-                            .font(.title)
-                    }
-                    Text(NSLocalizedString("Picture", comment: "Picture button label"))
-                }
-            }
-            .buttonStyle(.bordered)
+            })
             Button(NSLocalizedString("Show birthday screen", comment: "Show birthday screen button")) {
                 viewModel.showBirthdayScreen()
             }
@@ -83,7 +67,7 @@ struct ChildInfoView: View {
             .padding(.top, 16)
         }
         .padding()
-        .onReceive(viewModel.picturePublisher) { self.picture = $0 }
+        .safeAreaPadding(.all)
         .onReceive(viewModel.canShowBirthdayScreenPublisher) { self.canShowBirthdayScreen = $0 }
         .onReceive(viewModel.birthdayPublisher) { self.birthday = $0 }
         .onReceive(viewModel.namePublisher) { self.name = $0 }

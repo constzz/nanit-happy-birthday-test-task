@@ -5,19 +5,26 @@
 //  Created by Konstantin Bezzemelnyi on 20.09.2025.
 //
 
-import SwiftUI
+import Foundation
 import Combine
 
 final class ChildInfoViewModel: ChildInfoViewModelProtocol {
+    
+    struct Output {
+        let name: String
+        let birthday: Date
+        let avatar: FileCached?
+    }
+    
     private let nameSubject = CurrentValueSubject<String, Never>("")
     private let birthdaySubject = CurrentValueSubject<Date?, Never>(nil)
-    private let pictureSubject = CurrentValueSubject<Image?, Never>(nil)
+    private let pictureSubject = CurrentValueSubject<FileCached?, Never>(nil)
     
-    private let showBirthdayScreenAction: () -> Void
+    private let showBirthdayScreenAction: (Output) -> Void
     
     private let repository: ChildInfoRepositoryProtocol
     
-    init(repository: ChildInfoRepositoryProtocol, showBirthdayScreenAction: @escaping () -> Void) {
+    init(repository: ChildInfoRepositoryProtocol, showBirthdayScreenAction: @escaping (Output) -> Void) {
         self.repository = repository
         self.showBirthdayScreenAction = showBirthdayScreenAction
         
@@ -27,16 +34,14 @@ final class ChildInfoViewModel: ChildInfoViewModelProtocol {
         if let birthday = repository.getBirthday() {
             birthdaySubject.send(birthday)
         }
-        if let fileCached = repository.getFileCached(),
-           let data = fileCached.data,
-           let uiImage = UIImage(data: data) {
-            pictureSubject.send(Image(uiImage: uiImage))
+        if let fileCached = repository.getFileCached() {
+            pictureSubject.send(fileCached)
         }
     }
     
     var namePublisher: AnyPublisher<String, Never> { nameSubject.eraseToAnyPublisher() }
     var birthdayPublisher: AnyPublisher<Date?, Never> { birthdaySubject.eraseToAnyPublisher() }
-    var picturePublisher: AnyPublisher<Image?, Never> { pictureSubject.eraseToAnyPublisher() }
+    var picturePublisher: AnyPublisher<FileCached?, Never> { pictureSubject.eraseToAnyPublisher() }
     var canShowBirthdayScreenPublisher: AnyPublisher<Bool, Never> {
         Publishers.CombineLatest(nameSubject, birthdaySubject)
             .map { !$0.0.isEmpty && $0.1 != nil }
@@ -59,12 +64,7 @@ final class ChildInfoViewModel: ChildInfoViewModelProtocol {
     func setPicture(_ fileCached: FileCached?) {
         if let fileCached = fileCached {
             repository.save(fileCached: fileCached)
-            if let data = fileCached.data,
-               let uiImage = UIImage(data: data) {
-                pictureSubject.send(Image(uiImage: uiImage))
-            } else {
-                pictureSubject.send(nil)
-            }
+            pictureSubject.send(fileCached)
         } else {
             pictureSubject.send(nil)
         }
@@ -72,6 +72,12 @@ final class ChildInfoViewModel: ChildInfoViewModelProtocol {
     
     // MARK: - Actions
     func showBirthdayScreen() {
-        showBirthdayScreenAction()
+        let name = nameSubject.value
+        guard !name.isEmpty,
+              let birthday = birthdaySubject.value else {
+            return Logger.error("Error state to showBirthdayScreen without name or birthday.")
+        }
+              
+        showBirthdayScreenAction(.init(name: name, birthday: birthday, avatar: pictureSubject.value))
     }
 }

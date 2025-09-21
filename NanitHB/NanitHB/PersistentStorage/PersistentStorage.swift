@@ -169,7 +169,6 @@ extension PersistentStorage {
             
             // Verify the file exists after saving
             if FileManager.default.fileExists(atPath: fileURL.path) {
-                Logger.debug("Verified file exists at: \(fileURL)")
                 return fileURL
             } else {
                 Logger.error("File was saved but does not exist at: \(fileURL)")

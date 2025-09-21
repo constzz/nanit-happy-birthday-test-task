@@ -2,6 +2,7 @@ import SwiftUI
 
 struct BirthdayScreen: View {
     private let viewModel: any BirthdayScreenViewModelProtocol
+    private let attachmentsPicker = AttachmentsPickerPresenter()
     
     init(viewModel: any BirthdayScreenViewModelProtocol) {
         self.viewModel = viewModel
@@ -32,8 +33,19 @@ struct BirthdayScreen: View {
                         picturePublisher: viewModel.imagePublisher,
                         hideCameraIcon: false,
                         action: {
-                            
-                        })
+                            attachmentsPicker.present(
+                                allowedAttachments: [
+                                    .library(allowedMediaTypes: [.photo]),
+                                    .camera(allowedMediaTypes: [.photo], camera: .rear, allowsEditing: true)
+                                ],
+                                limit: 1,
+                                onPicked: { files in
+                                    guard let fileCached = files.first else { return }
+                                    viewModel.setImage(file: fileCached)
+                                }
+                            )
+                        }
+                    )
                     Spacer().frame(width: 50)
                 }
                 

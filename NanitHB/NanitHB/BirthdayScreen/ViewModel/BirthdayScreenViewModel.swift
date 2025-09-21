@@ -20,7 +20,6 @@ final class BirthdayScreenViewModel: BirthdayScreenViewModelProtocol {
     private(set) var ageTitleStartText: String
     private(set) var ageNumber: Int
     private(set) var ageTitleEndText: String
-    private(set) var image: FileCached?
     let theme: BirthdayTheme
     
     // MARK: - Properties
@@ -61,7 +60,7 @@ final class BirthdayScreenViewModel: BirthdayScreenViewModelProtocol {
         if let file {
             repository.save(fileCached: file)
         }
-        image = file
+        imageSubject.send(file)
     }
 }
 

@@ -16,7 +16,7 @@ struct ChildInfoView: View {
     @State private var picture: Image? = nil
     @State private var showImagePicker: Bool = false
     @State private var canShowBirthdayScreen: Bool = false
-    @StateObject private var attachmentsPicker = AttachmentsPickerPresenter()
+    private var attachmentsPicker = AttachmentsPickerPresenter()
     
     @State private var cancellables: Set<AnyCancellable> = []
     

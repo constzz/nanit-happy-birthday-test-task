@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class FileCached: Hashable {
+public final class FileCached: Hashable, Sendable {
     
     private enum Error: Swift.Error {
         case invalidData

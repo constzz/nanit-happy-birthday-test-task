@@ -76,6 +76,7 @@ struct ChildInfoView: View {
             }
             .buttonStyle(.bordered)
             Button(NSLocalizedString("Show birthday screen", comment: "Show birthday screen button")) {
+                viewModel.showBirthdayScreen()
             }
             .disabled(!canShowBirthdayScreen)
             .buttonStyle(.borderedProminent)

@@ -17,5 +17,6 @@ protocol ChildInfoViewModelProtocol {
 
     func setName(_ name: String)
     func setBirthday(_ date: Date?)
-    func setPicture(_ image: FileCached?)
+    func setPicture(_ fileCached: FileCached?)
+    func showBirthdayScreen()
 }

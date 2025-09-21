@@ -13,10 +13,13 @@ final class ChildInfoViewModel: ChildInfoViewModelProtocol {
     private let birthdaySubject = CurrentValueSubject<Date?, Never>(nil)
     private let pictureSubject = CurrentValueSubject<Image?, Never>(nil)
     
+    private let showBirthdayScreenAction: () -> Void
+    
     private let repository: ChildInfoRepositoryProtocol
     
-    init(repository: ChildInfoRepositoryProtocol) {
+    init(repository: ChildInfoRepositoryProtocol, showBirthdayScreenAction: @escaping () -> Void) {
         self.repository = repository
+        self.showBirthdayScreenAction = showBirthdayScreenAction
         
         if let name = repository.getName() {
             nameSubject.send(name)
@@ -40,7 +43,7 @@ final class ChildInfoViewModel: ChildInfoViewModelProtocol {
             .eraseToAnyPublisher()
     }
     
-    // Setters
+    // MARK: - Setters
     func setName(_ name: String) {
         nameSubject.send(name)
         repository.save(name: name)
@@ -65,5 +68,10 @@ final class ChildInfoViewModel: ChildInfoViewModelProtocol {
         } else {
             pictureSubject.send(nil)
         }
+    }
+    
+    // MARK: - Actions
+    func showBirthdayScreen() {
+        showBirthdayScreenAction()
     }
 }

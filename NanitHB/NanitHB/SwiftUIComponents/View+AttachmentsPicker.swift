@@ -8,8 +8,8 @@ final class AttachmentsPickerPresenter: ObservableObject {
     
     func present(
         allowedAttachments: [AttachmentsController.Attachment],
-        limit: Int = 1,
-        onPicked: @escaping ([Image]) -> Void
+        limit: Int,
+        onPicked: @escaping ([FileCached]) -> Void
     ) {
         guard let rootVC = UIApplication.shared.connectedScenes
             .compactMap({ ($0 as? UIWindowScene)?.keyWindow?.rootViewController })
@@ -26,15 +26,9 @@ final class AttachmentsPickerPresenter: ObservableObject {
             limit: limit
         )
         .sink { [weak self] files in
-            let images: [Image] = files?.compactMap { file in
-                if let data = try? Data(contentsOf: file.url),
-                   let uiImage = UIImage(data: data) {
-                    return Image(uiImage: uiImage)
-                }
-                return nil
-            } ?? []
-            onPicked(images)
             self?.cancellable = nil
+            guard let files, files.isNotEmpty else { return }
+            onPicked(files)
         }
     }
 }

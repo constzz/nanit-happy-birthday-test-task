@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        ChildInfoView(viewModel: ChildInfoViewModel())
+        ChildInfoView(viewModel: ChildInfoViewModel(repository: ChildInfoRepository(userDefaults: .standard, persistentStorage: .shared)))
     }
 }
 

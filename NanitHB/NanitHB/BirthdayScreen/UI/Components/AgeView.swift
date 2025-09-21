@@ -17,6 +17,7 @@ struct AgeView: View {
             .font(.system(size: 21.0, weight: .medium))
             .lineLimit(2)
             .multilineTextAlignment(.center)
+            .foregroundStyle(.nanitMainText)
         Spacer().frame(height: 13)
         HStack {
             Image(.swirlsLeft)
@@ -27,6 +28,7 @@ struct AgeView: View {
         Text(ageTitleEndText)
             .font(.system(size: 21.0))
             .multilineTextAlignment(.center)
+            .foregroundStyle(.nanitMainText)
     }
 }
 

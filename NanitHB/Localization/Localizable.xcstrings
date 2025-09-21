@@ -79,6 +79,9 @@
     "Clear" : {
       "comment" : "Clear button for date picker"
     },
+    "Dismiss" : {
+
+    },
     "Documents" : {
       "comment" : "Documents action"
     },
@@ -87,6 +90,9 @@
     },
     "Enter name" : {
       "comment" : "Name input placeholder"
+    },
+    "Error: %@" : {
+
     },
     "Give Access to Camera" : {
       "comment" : "Camera access action"
@@ -105,6 +111,9 @@
     },
     "Picture" : {
       "comment" : "Picture button label"
+    },
+    "Preparing image..." : {
+
     },
     "Select birthday" : {
       "comment" : "Birthday input placeholder"

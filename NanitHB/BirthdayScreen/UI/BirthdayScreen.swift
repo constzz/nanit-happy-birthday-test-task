@@ -1,72 +1,112 @@
 import SwiftUI
+import UIKit
 
 struct BirthdayScreen: View {
     private let viewModel: any BirthdayScreenViewModelProtocol
     private let attachmentsPicker = AttachmentsPickerPresenter()
+    
+    @State private var showShareSheet = false
+    @State private var shareImage: UIImage?
+    @State private var isLoadingSnapshot = false
+    @State private var snapshotError: String?
     
     init(viewModel: any BirthdayScreenViewModelProtocol) {
         self.viewModel = viewModel
     }
     
     var body: some View {
-        ZStack {
-            Image(viewModel.theme.bgImage)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .ignoresSafeArea()
-            
-            VStack(spacing: 0) {
-                Spacer().frame(height: 20)
-                
-                AgeView(
-                    ageTitleStartText: viewModel.ageTitleStartText,
-                    ageTitleEndText: viewModel.ageTitleEndText,
-                    ageImage: imageResourceForAge(age: viewModel.ageNumber)
-                )
-                .padding(.horizontal, 40)
-                Spacer().frame(height: 15)
-                
-                HStack {
-                    Spacer().frame(width: 50)
-                    AvatarView(
-                        birthdayTheme: viewModel.theme,
-                        picturePublisher: viewModel.imagePublisher,
-                        hideCameraIcon: false,
-                        action: {
-                            attachmentsPicker.present(
-                                allowedAttachments: [
-                                    .library(allowedMediaTypes: [.photo]),
-                                    .camera(allowedMediaTypes: [.photo], camera: .rear, allowsEditing: true)
-                                ],
-                                limit: 1,
-                                onPicked: { files in
-                                    guard let fileCached = files.first else { return }
-                                    viewModel.setImage(file: fileCached)
-                                }
-                            )
-                        }
-                    )
-                    Spacer().frame(width: 50)
-                }
-                
-                Spacer().frame(height: 15)
-                
-                Image(.nanitLogo)
+        ShareableSnapshotView(
+            isLoading: $isLoadingSnapshot,
+            error: $snapshotError,
+            onSnapshot: { image in
+                shareImage = image
+                showShareSheet = true
+            }
+        ) { snapshotContext in
+            ZStack {
+                Image(viewModel.theme.bgImage)
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 70)
+                    .aspectRatio(contentMode: .fill)
+                    .ignoresSafeArea()
                 
-                Spacer()
-                
-                Button("Share the news", image: .shareIcon, action: {
-                    // TODO: Implement share action
-                })
-                .buttonStyle(BirthdayShareButtonStyle())
-                
-                Spacer().frame(height: 53)
+                VStack(spacing: 0) {
+                    Spacer().frame(height: 20)
+                    
+                    AgeView(
+                        ageTitleStartText: viewModel.ageTitleStartText,
+                        ageTitleEndText: viewModel.ageTitleEndText,
+                        ageImage: imageResourceForAge(age: viewModel.ageNumber)
+                    )
+                    .padding(.horizontal, 40)
+                    Spacer().frame(height: 15)
+                    
+                    HStack {
+                        Spacer().frame(width: 50)
+                        AvatarView(
+                            birthdayTheme: viewModel.theme,
+                            picturePublisher: viewModel.imagePublisher,
+                            hideCameraIcon: snapshotContext.isSnapshotting,
+                            action: {
+                                attachmentsPicker.present(
+                                    allowedAttachments: [
+                                        .library(allowedMediaTypes: [.photo]),
+                                        .camera(allowedMediaTypes: [.photo], camera: .rear, allowsEditing: true)
+                                    ],
+                                    limit: 1,
+                                    onPicked: { files in
+                                        guard let fileCached = files.first else { return }
+                                        viewModel.setImage(file: fileCached)
+                                    }
+                                )
+                            }
+                        )
+                        Spacer().frame(width: 50)
+                    }
+                    
+                    Spacer().frame(height: 15)
+                    
+                    Image(.nanitLogo)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 70)
+                    
+                    Spacer()
+                    
+                    if !snapshotContext.isSnapshotting {
+                        Button("Share the news", image: .shareIcon, action: {
+                            snapshotContext.takeSnapshot()
+                        })
+                        .buttonStyle(BirthdayShareButtonStyle())
+                        
+                        Spacer().frame(height: 53)
+                    }
+                }
+            }
+            .background(viewModel.theme.bgColor)
+        }
+        .sheet(isPresented: $showShareSheet, onDismiss: { shareImage = nil }) {
+            if let image = shareImage {
+                ShareSheet(activityItems: [image])
             }
         }
-        .background(viewModel.theme.bgColor)
+        .overlay {
+            if isLoadingSnapshot {
+                ProgressView("Preparing image...")
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color.black.opacity(0.2))
+            }
+            if let error = snapshotError {
+                VStack {
+                    Text("Error: \(error)")
+                        .foregroundColor(.red)
+                        .padding()
+                    Button("Dismiss") { snapshotError = nil }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.black.opacity(0.2))
+            }
+        }
     }
 }
 

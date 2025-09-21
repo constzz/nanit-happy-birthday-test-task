@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct AppContentView: View {
     @StateObject private var router = Router<AppRoute>()
     private let container = AppContainer.shared
     
@@ -38,5 +38,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    AppContentView()
 }

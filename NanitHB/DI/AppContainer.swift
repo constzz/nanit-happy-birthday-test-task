@@ -22,7 +22,7 @@ final class AppContainer {
     func makeBirthdayScreenViewModel(
         input: BirthdayScreenViewModel.Input,
         onBack: @escaping () -> Void
-    ) -> BirthdayScreenViewModelProtocol {
+    ) -> any BirthdayScreenViewModelProtocol {
         BirthdayScreenViewModel(
             input: input,
             repository: childInfoRepository,

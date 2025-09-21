@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-protocol BirthdayScreenViewModelProtocol: ObservableObject {
+protocol BirthdayScreenViewModelProtocol {
     var ageTitleStartText: String { get }
     var ageNumber: Int { get }
     var ageTitleEndText: String { get }

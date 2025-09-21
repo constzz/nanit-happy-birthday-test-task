@@ -11,7 +11,7 @@ import SwiftUI
 struct NanitHBApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AppContentView()
         }
     }
 }

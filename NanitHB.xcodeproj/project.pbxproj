@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		7F49730E2E8078BD001E96E6 /* NanitHB.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = NanitHB.xcodeproj; sourceTree = "<group>"; };
 		7F9DA3702E8057D500418146 /* NanitHB.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = NanitHB.xcodeproj; sourceTree = "<group>"; };
 		7F9DA3A82E8057DB00418146 /* NanitHB.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = NanitHB.xcodeproj; sourceTree = "<group>"; };
 		7FDE66E82E805FAA00A0FA3D /* NanitHB.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = NanitHB.xcodeproj; sourceTree = "<group>"; };
@@ -32,6 +33,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F49730F2E8078BD001E96E6 /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
 		7F9DA3712E8057D500418146 /* Products */ = {
 			isa = PBXGroup;
 			name = Products;
@@ -123,6 +129,10 @@
 				{
 					ProductGroup = 7F9DA3712E8057D500418146 /* Products */;
 					ProjectRef = 7F9DA3702E8057D500418146 /* NanitHB.xcodeproj */;
+				},
+				{
+					ProductGroup = 7F49730F2E8078BD001E96E6 /* Products */;
+					ProjectRef = 7F49730E2E8078BD001E96E6 /* NanitHB.xcodeproj */;
 				},
 				{
 					ProductGroup = 7FDE66EA2E805FAA00A0FA3D /* Products */;
@@ -281,6 +291,7 @@
 				CODE_SIGN_ENTITLEMENTS = NanitHB/NanitHB.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
@@ -309,7 +320,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
 			name = Debug;
@@ -322,6 +333,7 @@
 				CODE_SIGN_ENTITLEMENTS = NanitHB/NanitHB.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
@@ -350,7 +362,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
 			name = Release;

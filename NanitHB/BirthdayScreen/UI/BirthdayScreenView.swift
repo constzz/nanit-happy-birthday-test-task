@@ -30,7 +30,38 @@ struct BirthdayScreenView: View {
                 showShareSheet = true
             }
         ) { snapshotContext in
-            ZStack(alignment: .bottom) {
+            ZStack(alignment: .center) {
+                HStack {
+                    Spacer().frame(width: 50)
+                    AvatarView(
+                        birthdayTheme: viewModel.theme,
+                        picturePublisher: viewModel.imagePublisher,
+                        hideCameraIcon: snapshotContext.isSnapshotting,
+                        action: {
+                            attachmentsPicker.present(
+                                allowedAttachments: [
+                                    .library(allowedMediaTypes: [.photo]),
+                                    .camera(allowedMediaTypes: [.photo], camera: .rear, allowsEditing: true)
+                                ],
+                                limit: 1,
+                                onPicked: { files in
+                                    guard let fileCached = files.first else { return }
+                                    viewModel.setImage(file: fileCached)
+                                }
+                            )
+                        }
+                    )
+                    Spacer().frame(width: 50)
+                }
+                .frame(height: 230)
+                .padding(.top, 20)
+                
+                Image(viewModel.theme.bgImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .ignoresSafeArea()
+
+                
                 VStack(spacing: 0) {
                     AgeView(
                         ageTitleStartText: viewModel.ageTitleStartText,
@@ -38,55 +69,22 @@ struct BirthdayScreenView: View {
                         ageImage: imageResourceForAge(age: viewModel.ageNumber)
                     )
                     .padding(.horizontal, 40)
-                    Spacer().frame(height: 15)
                     
-                    HStack {
-                        Spacer().frame(width: 50)
-                        AvatarView(
-                            birthdayTheme: viewModel.theme,
-                            picturePublisher: viewModel.imagePublisher,
-                            hideCameraIcon: snapshotContext.isSnapshotting,
-                            action: {
-                                attachmentsPicker.present(
-                                    allowedAttachments: [
-                                        .library(allowedMediaTypes: [.photo]),
-                                        .camera(allowedMediaTypes: [.photo], camera: .rear, allowsEditing: true)
-                                    ],
-                                    limit: 1,
-                                    onPicked: { files in
-                                        guard let fileCached = files.first else { return }
-                                        viewModel.setImage(file: fileCached)
-                                    }
-                                )
-                            }
-                        )
-                        Spacer().frame(width: 50)
-                    }
-                    .frame(height: 240)
-                    
-                    Spacer().frame(height: 15)
-                    
+                    Spacer()
                     Image(.nanitLogo)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 70)
                     
-                    Spacer()
-                }
-                .padding(.top, 20)
-                
-                Image(viewModel.theme.bgImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .ignoresSafeArea()
-                
-                if !snapshotContext.isSnapshotting {
-                    Button("Share the news", image: .shareIcon, action: {
-                        snapshotContext.takeSnapshot()
-                    })
-                    .buttonStyle(BirthdayShareButtonStyle())
-                    .zIndex(2)
-                    .padding(.bottom, 50)
+                    Spacer().frame(height: 20)
+                    
+                    if !snapshotContext.isSnapshotting {
+                        Button("Share the news", image: .shareIcon, action: {
+                            snapshotContext.takeSnapshot()
+                        })
+                        .buttonStyle(BirthdayShareButtonStyle())
+                        .padding(.bottom, 50)
+                    }
                 }
             }
             .background(viewModel.theme.bgColor)
@@ -101,6 +99,7 @@ struct BirthdayScreenView: View {
                     Spacer()
                 }
                 .padding(.top, 8)
+                .opacity(snapshotContext.isSnapshotting ? 0 : 1)
             }
         }
         .navigationBarBackButtonHidden()

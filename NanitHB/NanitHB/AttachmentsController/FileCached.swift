@@ -26,7 +26,7 @@ public class FileCached {
         fileName: String,
         cacheDestination: URL = FileManager.default.temporaryDirectory
     ) -> FileCached? {
-        guard let url = PersistentStorage.shared.saveToCache(data: data, fileNameWithExtension: fileName) else {
+        guard let url = PersistentStorage.shared.saveToCache(data: data, fileName: fileName) else {
             return nil
         }
         

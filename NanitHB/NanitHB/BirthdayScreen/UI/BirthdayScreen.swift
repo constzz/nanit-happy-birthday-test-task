@@ -22,7 +22,7 @@ struct BirthdayScreen: View {
                     ageTitleEndText: viewModel.ageTitleEndText,
                     ageImage: imageResourceForAge(age: viewModel.ageNumber)
                 )
-                
+                .padding(.horizontal, 40)
                 Spacer().frame(height: 15)
                 
                 HStack {
@@ -56,7 +56,11 @@ struct BirthdayScreen: View {
 }
 
 #Preview {
-    BirthdayScreen(viewModel: BirthdayScreenViewModel(input: .init(name: "Username", birthdayDate: .init(timeInterval: -60000000 * 6, since: .now), avatar: nil, theme: .fox), repository: ChildInfoRepository(userDefaults: .standard, persistentStorage: .shared), onBack: {}))
+    BirthdayScreen(viewModel: BirthdayScreenViewModel(input: .init(name: "bla bla blabla bla blabla bla blabla bla blabla bla bla", birthdayDate: .init(timeInterval: -60*60*24*364, since: .now), avatar: nil, theme: .fox), repository: ChildInfoRepository(userDefaults: .standard, persistentStorage: .shared), onBack: {}))
+}
+
+#Preview {
+    BirthdayScreen(viewModel: BirthdayScreenViewModel(input: .init(name: "Cristiano Ronaldo", birthdayDate: .init(timeInterval: -60*60*24*366, since: .now), avatar: nil, theme: .fox), repository: ChildInfoRepository(userDefaults: .standard, persistentStorage: .shared), onBack: {}))
 }
 
 #Preview {

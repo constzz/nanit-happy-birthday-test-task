@@ -13,22 +13,20 @@ struct AgeView: View {
     let ageImage: ImageResource
     
     var body: some View {
-        VStack {
-            Text(ageTitleStartText)
-                .font(.system(size: 21.0, weight: .medium))
-                .lineLimit(2)
-                .multilineTextAlignment(.center)
-            Spacer().frame(height: 13)
-            HStack {
-                Image(.swirlsLeft)
-                Image(ageImage).padding(.horizontal, 22)
-                Image(.swirlsRight)
-            }
-            Spacer().frame(height: 14)
-            Text(ageTitleEndText)
-                .font(.system(size: 21.0))
-                .multilineTextAlignment(.center)
+        Text(ageTitleStartText)
+            .font(.system(size: 21.0, weight: .medium))
+            .lineLimit(2)
+            .multilineTextAlignment(.center)
+        Spacer().frame(height: 13)
+        HStack {
+            Image(.swirlsLeft)
+            Image(ageImage).padding(.horizontal, 22)
+            Image(.swirlsRight)
         }
+        Spacer().frame(height: 14)
+        Text(ageTitleEndText)
+            .font(.system(size: 21.0))
+            .multilineTextAlignment(.center)
     }
 }
 

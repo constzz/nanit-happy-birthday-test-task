@@ -67,17 +67,24 @@ final class BirthdayScreenViewModel: BirthdayScreenViewModelProtocol {
 
 private extension BirthdayScreenViewModel {
     static func makeAgeTitleStartText(name: String) -> String {
-        "TODAY \(name.uppercased()) IS"
+        String(format: NSLocalizedString("birthday_today_is", comment: "Today (birthday) ... is"), name.uppercased())
     }
     
     static func makeAgeTitleEndText(diffComponents: DateComponents) -> String {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .full
+        formatter.allowedUnits = [.year, .month]
+        formatter.maximumUnitCount = 1
+        formatter.zeroFormattingBehavior = .dropAll
         if let years = diffComponents.year, years > 0 {
-            return years == 1 ? "YEAR" : "YEARS"
+            let comps = DateComponents(year: years)
+            return formatter.string(from: comps)?.uppercased() ?? NSLocalizedString("birthday_year_fallback", comment: "Year fallback")
         } else if let months = diffComponents.month {
-            return months == 1 ? "MONTH" : "MONTHS"
+            let comps = DateComponents(month: months)
+            return formatter.string(from: comps)?.uppercased() ?? NSLocalizedString("birthday_month_fallback", comment: "Month fallback")
         } else {
             Logger.error("Not expected to show the view to celebrate 0 months")
-            return "MONTHS"
+            return NSLocalizedString("birthday_months_fallback", comment: "Months fallback")
         }
     }
     

@@ -4,6 +4,26 @@
     "Birthday" : {
       "comment" : "Birthday label"
     },
+    "birthday_month_fallback" : {
+      "comment" : "Month fallback"
+    },
+    "birthday_months_fallback" : {
+      "comment" : "Months fallback"
+    },
+    "birthday_today_is" : {
+      "comment" : "Today (birthday) ... is",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TODAY %@ IS"
+          }
+        }
+      }
+    },
+    "birthday_year_fallback" : {
+      "comment" : "Year fallback"
+    },
     "Camera" : {
       "comment" : "Camera action"
     },
@@ -59,9 +79,6 @@
     },
     "Show birthday screen" : {
       "comment" : "Show birthday screen button"
-    },
-    "TODAY %@ IS" : {
-
     }
   },
   "version" : "1.0"

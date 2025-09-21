@@ -30,15 +30,9 @@ struct BirthdayScreenView: View {
                 showShareSheet = true
             }
         ) { snapshotContext in
-            ZStack {
-                Image(viewModel.theme.bgImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .ignoresSafeArea()
-                
+            ZStack(alignment: .bottom) {
                 VStack(spacing: 0) {
                     Spacer().frame(height: 20)
-                    
                     AgeView(
                         ageTitleStartText: viewModel.ageTitleStartText,
                         ageTitleEndText: viewModel.ageTitleEndText,
@@ -69,6 +63,7 @@ struct BirthdayScreenView: View {
                         )
                         Spacer().frame(width: 50)
                     }
+                    .frame(height: 240)
                     
                     Spacer().frame(height: 15)
                     
@@ -78,15 +73,21 @@ struct BirthdayScreenView: View {
                         .frame(width: 70)
                     
                     Spacer()
-                    
-                    if !snapshotContext.isSnapshotting {
-                        Button("Share the news", image: .shareIcon, action: {
-                            snapshotContext.takeSnapshot()
-                        })
-                        .buttonStyle(BirthdayShareButtonStyle())
-                        
-                        Spacer().frame(height: 53)
-                    }
+                }
+                .padding(.top, 20)
+                
+                Image(viewModel.theme.bgImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .ignoresSafeArea()
+                
+                if !snapshotContext.isSnapshotting {
+                    Button("Share the news", image: .shareIcon, action: {
+                        snapshotContext.takeSnapshot()
+                    })
+                    .buttonStyle(BirthdayShareButtonStyle())
+                    .zIndex(2)
+                    .padding(.bottom, 50)
                 }
             }
             .background(viewModel.theme.bgColor)
